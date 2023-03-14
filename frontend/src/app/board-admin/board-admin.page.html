@@ -1,0 +1,83 @@
+<div>
+  <div class="submit-form">
+    <div *ngIf="!submitted">
+      <div class="form-group">
+        <label for="product_name">Name of Product</label>
+        <input
+          type="text"
+          class="form-control"
+          id="product_name"
+          required
+          [(ngModel)]="product.product_name"
+          name="product_name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="product_brand">Name of Product Brand</label>
+        <input
+          type="text"
+          class="form-control"
+          id="product_brand"
+          required
+          [(ngModel)]="product.product_brand"
+          name="product_brand"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="product_description">Description</label>
+        <input
+          class="form-control"
+          id="product_description"
+          required
+          [(ngModel)]="product.product_description"
+          name="product_description"
+        />
+      </div>
+      
+      <div class="form-group">
+        <label for="product_img">Image of Product</label>
+        <input
+          type="text"
+          class="form-control"
+          id="product_img"
+          required
+          [(ngModel)]="product.product_img"
+          name="product_img"
+        />
+      </div>
+      
+      <div class="form-group">
+        <label for="product_quantity">Quantity of Product</label>
+        <input
+          type="text"
+          class="form-control"
+          id="product_quantity"
+          required
+          [(ngModel)]="product.product_quantity"
+          name="product_quantity"
+        />
+      </div>
+      
+      <div class="form-group">
+        <label for="product_other_detail">Other Detail</label>
+        <input
+          type="text"
+          class="form-control"
+          id="product_other_detail"
+          required
+          [(ngModel)]="product.product_other_detail"
+          name="product_other_detail"
+        />
+      </div>
+
+      <button (click)="saveProduct()" class="btn btn-success">Submit</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>Tutorial was submitted successfully!</h4>
+      <button class="btn btn-success" (click)="newProduct()">Add</button>
+    </div>
+  </div>
+</div>

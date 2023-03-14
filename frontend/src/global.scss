@@ -1,0 +1,378 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+.text-red {
+    color: var(--ion-color-danger) !important;
+}
+.text-white {
+    color: var(--ion-color-tertiary) !important;
+}
+.text-gray {
+    color: gray !important;
+}
+.text-blue {
+    color: var(--ion-color-primary) !important;
+}
+.text-black {
+    color: var(--ion-color-dark) !important;
+}
+.text-yellow {
+    color: var(--ion-color-warning) !important;
+}
+
+.eslip-aproved-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: unset;
+}
+.eslip-dim {
+    -webkit-filter: brightness(50%);
+    -moz-filter: brightness(50%);
+    filter: url(#brightness);
+    filter: brightness(50%);
+}
+
+.content-full {
+    min-height: 100%;
+}
+
+
+
+ion-toolbar {
+    box-shadow: 1px 48px 107px -21px rgba(0,0,0,0.56);
+    -webkit-box-shadow: 1px 48px 107px -21px rgba(0,0,0,0.56);
+    -moz-box-shadow: 1px 48px 107px -21px rgba(0,0,0,0.56);
+}
+
+ion-card {
+    margin-bottom: 0%;
+    margin-top: 10%;
+    margin: unset !important;
+    // border: none !important;
+    width: auto !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-radius: unset;
+    .qr {
+        display: block;
+        width: unset;
+    }
+    .icon {
+        // width: unset;
+        // display: unset;
+        align-items: center;
+    }
+    .circle {
+        border-radius: 50% !important;
+    }
+}
+
+ion-card-content {
+    margin-bottom: -5%;
+    margin-top: -5%;
+    margin: unset !important;
+    border: none !important;
+    width: auto !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-radius: unset;
+    align-items: center;
+    .qr {
+        display: block;
+        width: unset;
+    }
+    .icon {
+        width: unset;
+        display: unset;
+    }
+    .circle {
+        border-radius: 50% !important;
+    }
+}
+
+ion-item {
+    margin-bottom: 5%;
+    margin-top: 5%;
+    margin: unset !important;
+    border: none !important;
+    // width: auto !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-radius: unset;
+    img.circle {
+        border-radius: 50% !important;
+    }
+}
+
+#rcorners5 {
+    border-radius: 50px 50px 50px 5px;
+    width: 70px;
+    height: 40px; 
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+    display: block;
+}
+
+.searchbar-ios {
+    background: unset;
+}
+
+form ion-item ion-label {
+    font-weight: bold;
+}
+
+.non-circle {
+    border-radius: unset !important;
+}
+
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+ion-fab {
+    margin: 0 !important;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+
+.transaction {
+    .right-line {
+        border-right: 0.55px solid #c8c7cc !important;
+    }
+
+    .right-arrow {
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        color: var(--ion-color-medium);
+        background-color: var(--ion-color-tertiary);
+    }
+
+    .indentation {
+        background-image: url(./assets/imgs/indentationbg.png);
+        background-repeat: repeat-x;
+        height: 10px;
+        margin-top: -1px;
+        background-size: 16px;
+    }
+
+    .text-no-wrap {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .text-vertical-center {
+        margin: auto 0px !important;
+    }
+
+    .content-center {
+        display: flex;
+        justify-content: center;
+    }
+
+    .padding-vertical-long {
+        padding: 50px 0 !important;
+    }
+
+    ion-label {
+        margin: unset !important;
+    }
+
+    .list-ios {
+        margin: unset !important;
+    }
+
+    .transaction-img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+ion-avatar.avatar-xs {
+    width: 18px;
+    height: 18px;
+}
+ion-avatar.avatar-s {
+    width: 30px;
+    height: 30px;
+}
+
+ion-avatar.avatar-m {
+    width: 45px;
+    height: 45px;
+}
+ion-avatar.avatar-l {
+    width: 60px;
+    height: 60px;
+}
+ion-avatar.avatar-xl {
+    width: 80px;
+    height: 80px;
+}
+.logo-xs {
+    width: 18px;
+    height: 18px;
+}
+.logo-s {
+    width: 30px;
+    height: 30px;
+}
+.logo-m {
+    width: 45px;
+    height: 45px;
+}
+
+.logo-l {
+    width: 60px;
+    height: 60px;
+}
+
+ion-fab-button.fab-small {
+    margin-top: 0%;
+    margin-bottom: 2%;
+    width: 25px;
+    height: 25px;
+    
+}
+
+.no-shadow {
+    --box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.text-indent {
+    text-indent: 5%;
+}
+
+.ion-select-full {
+    max-width: unset;
+    width: 100%;
+}
+
+ion-item.imageCenter img {
+    height: 90px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ion-label ion-skeleton-text {
+    height: 17px;
+    width: 80%;
+}
+
+H3 ion-skeleton-text {
+    height: 14px;
+    width: 60%;
+}
+
+.line-height2{
+    line-height: 2 !important;
+}
+
+.text-hidden{
+    overflow: hidden;
+}
+
+.input-money{
+    margin-left:26px;
+}
+
+a.link-medium{
+    text-decoration: none !important;
+    color: var(--ion-color-medium) !important;
+}
+
+.upload-image-crop {
+    padding: 20px;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 50%, rgba(0, 0, 0, 0.1) 50%);
+    mask-image: radial-gradient(circle at 50% 50%, black 50%, rgba(0, 0, 0, 0.1) 50%);
+}
+
+.border-radius{
+    border-radius: 10px;
+}
+
+
+
+ion-toggle{
+    --handle-height: 20px;
+    --handle-width: 15px;
+    height: 20px;
+    width: 30px;
+}
+
+
+// Fonts
+// --------------------------------------------------
+@font-face {
+    font-family: "Kanit";
+    font-style: normal;
+    font-weight: 300;
+    src: url("./assets/fonts/kanit-v3-latin_thai-300.eot"); /* IE9 Compat Modes */
+    src: local("Kanit Light"), local("Kanit-Light"),
+        url("./assets/fonts/kanit-v3-latin_thai-300.eot?#iefix") format("embedded-opentype"),
+        /* IE6-IE8 */ url("./assets/fonts/kanit-v3-latin_thai-300.woff2") format("woff2"),
+        /* Super Modern Browsers */ url("./assets/fonts/kanit-v3-latin_thai-300.woff") format("woff"),
+        /* Modern Browsers */ url("./assets/fonts/kanit-v3-latin_thai-300.ttf") format("truetype"),
+        /* Safari, Android, iOS */ url("./assets/fonts/kanit-v3-latin_thai-300.svg#Kanit") format("svg"); /* Legacy iOS */
+}
+
+//   * {
+//     font-family: 'Kanit', sans-serif;
+//   }
+
+ion-accordion-group{
+    ion-accordion {
+        .ion-accordion-toggle-icon {
+            display: none;
+        }
+    }
+}
+
+$font-family-base: "Kanit";
+$font-family-ios-base: "Kanit";
+$font-family-md-base: "Kanit";
+$font-family-wp-base: "Kanit";
+//   @import "roboto";
+//   @import "noto-sans";

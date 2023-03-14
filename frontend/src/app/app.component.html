@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+      <div id="app">
+      <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <ion-title>โชคดีการเกษตร</ion-title>
+        <!-- <a href="#" class="navbar-brand">bezKoder</a> -->
+        <ul class="navbar-nav mr-auto" routerLinkActive="active">
+          <li class="nav-item">
+            <a href="/home" class="nav-link" routerLink="home">Home </a>
+          </li>
+          <li class="nav-item" *ngIf="showAdminBoard">
+            <a href="/admin" class="nav-link" routerLink="admin">เพิ่มรายการสินค้า</a>
+          </li>
+          <li class="nav-item" *ngIf="showModeratorBoard">
+            <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>
+          </li>
+          <li class="nav-item">
+            <a href="/list" class="nav-link" *ngIf="isLoggedIn" routerLink="list">รายการสินค้า</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+          <li class="nav-item">
+            <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a href="/login" class="nav-link" routerLink="login">Login</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+          <li class="nav-item">
+            <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+          </li>
+          <li class="nav-item">
+            <a href class="nav-link" (click)="logout()">LogOut</a>
+          </li>
+        </ul>
+
+        
+        <!-- <div class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a routerLink="tutorials" class="nav-link">Tutorials</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="add" class="nav-link">Add</a>
+          </li>
+        </div> -->
+      </nav>
+
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<!-- <ion-tabs mode="ios">
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="main-menu">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>หน้าหลัก</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="car-promotion">
+      <ion-icon name="pricetag"></ion-icon>
+      <ion-label>ดีล</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="my-booking">
+      <ion-icon name="book"></ion-icon>
+      <ion-label>การจองของฉัน</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="my-account">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>บัญชี</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs> -->
