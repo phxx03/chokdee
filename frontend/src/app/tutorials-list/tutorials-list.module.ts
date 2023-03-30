@@ -18,7 +18,7 @@ import { TutorialsListPage } from './tutorials-list.page';
     IonicModule,
     TutorialsListPageRoutingModule
   ],
-  declarations: [
+  declarations: [TutorialsListPage
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

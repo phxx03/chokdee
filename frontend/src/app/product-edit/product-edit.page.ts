@@ -4,24 +4,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Tutorial } from 'src/app/models/tutorial.model';
 
 @Component({
-  selector: 'app-tutorial-details',
-  templateUrl: './tutorial-details.page.html',
-  styleUrls: ['./tutorial-details.page.scss'],
+  selector: 'app-product-edit',
+  templateUrl: './product-edit.page.html',
+  styleUrls: ['./product-edit.page.scss'],
 })
-export class TutorialDetailsPage implements OnInit {
-
-  @Input() viewMode = false;
-
-  @Input() currentProduct: Tutorial = {
-    product_name: '',
-    product_brand: '',
-    product_description: '',
-    product_img: '',
-    product_quantity: '',
-    product_other_detail: '',
-    product_published: false
-  };
-  
+export class ProductEditPage implements OnInit {
+ 
+  products?: Tutorial[];
+  currentProduct: Tutorial = {};
+  currentIndex = -1;
+  product_name = '';
+  product_brand = '';
+  product_description = '';
+  product_img = '';
+  product_quantity = '';
+  product_other_detail = '';
+  product_published = false ;  
   message = '';
 
   constructor(
@@ -30,27 +28,19 @@ export class TutorialDetailsPage implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    if (!this.viewMode) {
-      this.message = '';
-      this.getProduct(this.route.snapshot.params["id"]);
-    }
+    const id = this.route.snapshot.params['id'];
+    this.getProduct(id);
   }
-
-
 
   getProduct(id: string): void {
     this.tutorialService.get(id)
       .subscribe({
         next: (data) => {
           this.currentProduct = data;
-          console.log(data);
+          console.log(this.currentProduct);
         },
         error: (e) => console.error(e)
       });
-  }
-
-  editProduct(productId: number) {
-    this.router.navigate(['/product-edit', productId]);
   }
 
   updatePublished(status: boolean): void {
@@ -85,6 +75,7 @@ export class TutorialDetailsPage implements OnInit {
         next: (res) => {
           console.log(res);
           this.message = res.message ? res.message : 'This product was updated successfully!';
+          this.router.navigate(['/list']);
         },
         error: (e) => console.error(e)
       });

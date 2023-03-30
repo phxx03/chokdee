@@ -25,15 +25,21 @@
         class="list-group-item"
         *ngFor="let product of products; let i = index"
         [class.active]="i == currentIndex"
-        (click)="setActiveProduct(product, i)"
+        (click)="goToDetailPage(product.id)"
       >
-        {{ product.product_name }}
-      <a
-        class="list-group-item"
-        [class.active]="i == currentIndex"
-      >
-        {{ product.product_quantity }}
-    </a>
+        <ion-item>
+          <ion-thumbnail slot="start">
+          <img src= "{{ product.product_img }}" />
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ product.product_name }}</h2>
+            <small>{{ product.product_description }}</small>
+          </ion-label>
+          
+          <a class="list-group-item" [class.active]="i == currentIndex">
+            {{ product.product_quantity }}
+          </a>
+      </ion-item>
       </li>
     </ul>
 
@@ -42,12 +48,12 @@
     </button>
   </div>
   
-  <div class="col-md-6">
+  <!-- <div class="col-md-6">
     <app-tutorial-details
       [viewMode]="true"
       [currentProduct]="currentProduct"
     >
     </app-tutorial-details>
-  </div>
+  </div> -->
 
 </div>

@@ -13,7 +13,7 @@ import { TutorialsListPage } from './tutorials-list/tutorials-list.page';
 import {map} from 'rxjs/operators';
 
 @NgModule({
-  declarations: [AppComponent,TutorialDetailsPage,TutorialsListPage
+  declarations: [AppComponent,TutorialDetailsPage
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,FormsModule],

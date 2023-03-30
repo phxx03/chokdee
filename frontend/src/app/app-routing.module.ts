@@ -49,8 +49,28 @@ const routes: Routes = [
     loadChildren: () => import('./tutorials-list/tutorials-list.module').then( m => m.TutorialsListPageModule)
   },
   {
+    path: 'list/:id',
+    loadChildren: () => import('./tutorial-details/tutorial-details.module').then( m => m.TutorialDetailsPageModule)
+  },
+  {
     path: 'details',
     loadChildren: () => import('./tutorial-details/tutorial-details.module').then( m => m.TutorialDetailsPageModule)
+  },
+  {
+    path: 'details/:id',
+    loadChildren: () => import('./tutorial-details/tutorial-details.module').then( m => m.TutorialDetailsPageModule)
+  },
+  {
+    path: 'delivery-status',
+    loadChildren: () => import('./delivery-status/delivery-status.module').then( m => m.DeliveryStatusPageModule)
+  },
+  {
+    path: 'product-edit',
+    loadChildren: () => import('./product-edit/product-edit.module').then( m => m.ProductEditPageModule)
+  },
+  {
+    path: 'product-edit/:id',
+    loadChildren: () => import('./product-edit/product-edit.module').then( m => m.ProductEditPageModule)
   },
 ];
 

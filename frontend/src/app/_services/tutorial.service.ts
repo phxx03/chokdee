@@ -9,6 +9,9 @@ const baseUrl = 'http://localhost:8080/api/products';
   providedIn: 'root'
 })
 export class TutorialService {
+  getProducts() {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(private http: HttpClient) { }
 
