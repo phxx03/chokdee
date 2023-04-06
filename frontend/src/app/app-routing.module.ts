@@ -72,6 +72,26 @@ const routes: Routes = [
     path: 'product-edit/:id',
     loadChildren: () => import('./product-edit/product-edit.module').then( m => m.ProductEditPageModule)
   },
+  {
+    path: 'menubar',
+    loadChildren: () => import('./menubar/menubar.module').then( m => m.MenubarPageModule)
+  },
+  {
+    path: 'personnel-list',
+    loadChildren: () => import('./personnel-list/personnel-list.module').then( m => m.PersonnelListPageModule)
+  },
+  {
+    path: 'personnel-add',
+    loadChildren: () => import('./personnel-add/personnel-add.module').then( m => m.PersonnelAddPageModule)
+  },
+  {
+    path: 'order',
+    loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule)
+  },
+  {
+    path: 'order-list',
+    loadChildren: () => import('./order-list/order-list.module').then( m => m.OrderListPageModule)
+  },
 ];
 
 @NgModule({

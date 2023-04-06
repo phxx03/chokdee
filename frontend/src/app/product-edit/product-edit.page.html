@@ -1,103 +1,109 @@
-<div *ngIf="currentProduct.id" class="edit-form">
-  <h4>Edit Product</h4>
-  <form>
-    <div class="form-group">
-      <label for="product_name">Name of Product</label>
-      <input
-        type="text"
-        class="form-control"
-        id="product_name"
-        [(ngModel)]="currentProduct.product_name"
-        name="product_name"
-      />
-    </div>
-    <div class="form-group">
-      <label for="product_brand">Name of Product Brand</label>
-      <input
-        type="text"
-        class="form-control"
-        id="product_brand"
-        [(ngModel)]="currentProduct.product_brand"
-        name="product_brand"
-      />
-    </div>
-    <div class="form-group">
-      <label for="product_description">Description</label>
-      <input
-        type="text"
-        class="form-control"
-        id="product_description"
-        [(ngModel)]="currentProduct.product_description"
-        name="product_description"
-      />
-    </div>
-    <div class="form-group">
-      <label for="product_img">Image of Product</label>
-      <input
-        type="text"
-        class="form-control"
-        id="product_img"
-        [(ngModel)]="currentProduct.product_img"
-        name="product_img"
-      />
-    </div>
-    <div class="form-group">
-      <label for="product_quantity">Quantity of Product</label>
-      <input
-        type="text"
-        class="form-control"
-        id="product_quantity"
-        [(ngModel)]="currentProduct.product_quantity"
-        name="product_quantity"
-      />
-    </div>
-    <div class="form-group">
-      <label for="product_other_detail">Other Detail</label>
-      <input
-        type="text"
-        class="form-control"
-        id="product_other_detail"
-        [(ngModel)]="currentProduct.product_other_detail"
-        name="product_other_detail"
-      />
-    </div>
+<ion-header class="header" mode="ios">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-light ion-padding-center">แก้ไขรายการสินค้า</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-    <div class="form-group">
-      <label><strong>Status:</strong></label>
-      {{ currentProduct.product_published ? "ขายได้" : "ขายไม่ได้" }}
-    </div>
-  </form>
+<ion-card *ngIf="currentProduct.id">
+  <ion-item>
+    <ion-label for="product_name" position="floating">Name of Product</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="product_name"
+      [(ngModel)]="currentProduct.product_name"
+      name="product_name" >
+    </ion-input>
+  </ion-item>
 
-  <button
-    class="badge badge-primary mr-2"
+  <ion-item>
+    <ion-label position="floating" for="product_brand">Name of Product Brand</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="product_brand"
+      [(ngModel)]="currentProduct.product_brand"
+      name="product_brand">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating" for="product_description">Description</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="product_description"
+      [(ngModel)]="currentProduct.product_description"
+      name="product_description">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating" for="product_img">Image of Product</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="product_img"
+      [(ngModel)]="currentProduct.product_img"
+      name="product_img">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating" for="product_quantity">Quantity of Product</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="product_quantity"
+      [(ngModel)]="currentProduct.product_quantity"
+      name="product_quantity">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating" for="product_other_detail">Other Detail</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="product_other_detail"
+      [(ngModel)]="currentProduct.product_other_detail"
+      name="product_other_detail">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label><strong>Status:</strong></ion-label>
+    {{ currentProduct.product_published ? "จัดส่งแล้ว" : "รอการจัดส่ง..." }}
+  </ion-item>
+
+  <ion-button 
     *ngIf="currentProduct.product_published"
-    (click)="updatePublished(false)"
-  >
-    ขายไม่ได้
-  </button>
-  <button
+    (click)="updatePublished(false)" 
+    fill="outline"
+    color="medium">
+    รอการจัดส่ง...
+  </ion-button>
+
+  <ion-button 
     *ngIf="!currentProduct.product_published"
-    class="badge badge-primary mr-2"
     (click)="updatePublished(true)"
-  >
-    ขายได้
-  </button>
+    fill="outline"
+    color="medium">
+    จัดส่งแล้ว
+  </ion-button>
 
-  <button class="badge badge-danger mr-2" (click)="deleteProduct()">
+  <ion-button (click)="deleteProduct()" color="danger">
     Delete
-  </button>
+  </ion-button>
 
-  <button
-    type="submit"
-    class="badge badge-success mb-2"
-    (click)="updateProduct()"
-  >
+  <ion-button (click)="updateProduct()" color="success">
     Update
-  </button>
-  <p>{{ message }}</p>
-</div>
+  </ion-button>
 
-<div *ngIf="!currentProduct.id">
-  <br />
-  <p>Cannot access this Product...</p>
-</div>
+  <ion-item>
+    <p>{{ message }}</p>
+  </ion-item>
+  
+  <ion-item *ngIf="!currentProduct.id">
+    <br />
+    <p>Cannot access this Product...</p>
+  </ion-item>
+
+</ion-card>

@@ -1,83 +1,81 @@
-<div>
-  <div class="submit-form">
-    <div *ngIf="!submitted">
-      <div class="form-group">
-        <label for="product_name">Name of Product</label>
-        <input
-          type="text"
-          class="form-control"
-          id="product_name"
-          required
-          [(ngModel)]="product.product_name"
-          name="product_name"
-        />
-      </div>
+<ion-header class="header" mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title class=" ion-padding-center">เพิ่มรายการสินค้า</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-      <div class="form-group">
-        <label for="product_brand">Name of Product Brand</label>
-        <input
-          type="text"
-          class="form-control"
-          id="product_brand"
-          required
-          [(ngModel)]="product.product_brand"
-          name="product_brand"
-        />
-      </div>
+<ion-card *ngIf="!submitted">
+  <ion-item>
+    <ion-label position="floating">
+      Name of Product
+    </ion-label>
+    <ion-input 
+      placeholder="Enter text" 
+      id="product_name" required 
+      [(ngModel)]="product.product_name">
+    </ion-input>
+  </ion-item>
 
-      <div class="form-group">
-        <label for="product_description">Description</label>
-        <input
-          class="form-control"
-          id="product_description"
-          required
-          [(ngModel)]="product.product_description"
-          name="product_description"
-        />
-      </div>
-      
-      <div class="form-group">
-        <label for="product_img">Image of Product</label>
-        <input
-          type="text"
-          class="form-control"
-          id="product_img"
-          required
-          [(ngModel)]="product.product_img"
-          name="product_img"
-        />
-      </div>
-      
-      <div class="form-group">
-        <label for="product_quantity">Quantity of Product</label>
-        <input
-          type="text"
-          class="form-control"
-          id="product_quantity"
-          required
-          [(ngModel)]="product.product_quantity"
-          name="product_quantity"
-        />
-      </div>
-      
-      <div class="form-group">
-        <label for="product_other_detail">Other Detail</label>
-        <input
-          type="text"
-          class="form-control"
-          id="product_other_detail"
-          required
-          [(ngModel)]="product.product_other_detail"
-          name="product_other_detail"
-        />
-      </div>
+  <ion-item>
+    <ion-label position="floating">
+      Name of Product Brand
+    </ion-label>
+    <ion-input 
+      placeholder="Enter text" 
+      id="product_brand" required 
+      [(ngModel)]="product.product_brand">
+    </ion-input>
+  </ion-item>
 
-      <button (click)="saveProduct()" class="btn btn-success">Submit</button>
-    </div>
+  <ion-item>
+    <ion-label position="floating">
+      Description
+    </ion-label>
+    <ion-input 
+      placeholder="Enter text" 
+      id="product_description" required 
+      [(ngModel)]="product.product_description">
+    </ion-input>
+  </ion-item>
 
-    <div *ngIf="submitted">
-      <h4>Tutorial was submitted successfully!</h4>
-      <button class="btn btn-success" (click)="newProduct()">Add</button>
-    </div>
-  </div>
-</div>
+  <ion-item>
+    <ion-label position="floating">
+      Image of Product
+    </ion-label>
+    <ion-input 
+      placeholder="Enter text" 
+      id="product_img" required 
+      [(ngModel)]="product.product_img">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating">
+      Quantity of Product
+    </ion-label>
+    <ion-input 
+      placeholder="Enter text" 
+      id="product_quantity" required 
+      [(ngModel)]="product.product_quantity">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating">
+      Other Detail
+    </ion-label>
+    <ion-input 
+      placeholder="Enter text" 
+      id="product_other_detail" required 
+      [(ngModel)]="product.product_other_detail">
+    </ion-input>
+  </ion-item>
+  
+    <ion-button (click)="saveProduct()" expand="block" color="success">
+      Submit
+    </ion-button>
+  
+</ion-card>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TokenStorageService } from './_services/token-storage.service';
+import { MenuController } from '@ionic/angular';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class AppComponent {
   showModeratorBoard = false;
   username?: string;
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService, private menuCtrl: MenuController) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -30,6 +31,10 @@ export class AppComponent {
     }
   }
 
+  openMenu() {
+    this.menuCtrl.open();
+  }
+  
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
