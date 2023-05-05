@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
+const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -12,15 +13,25 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+var corsOptions = {
+  origin:[ "http://localhost:8100"]
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 const db = require("./app/models");
+
 db.sequelize.sync()
-  .then(() => {
-    console.log("Synced db.");
-  })
-  .catch((err) => {
-    console.log("Failed to sync db: " + err.message);
-  });
+  // .then(() => {
+  //   console.log("Synced db.");
+  // })
+  // .catch((err) => {
+  //   console.log("Failed to sync db: " + err.message);
+  // });
 
 const Role = db.role;
 
@@ -67,7 +78,7 @@ function initial() {
 
 // routes
 require('./app/routes/auth.routes')(app);
-require('./app/routes/user.routes')(app);
+require("./app/routes/user.routes")(app);
 require("./app/routes/turorial.routes")(app);
 
 // set port, listen for requests

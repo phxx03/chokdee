@@ -1,0 +1,119 @@
+<ion-header class="header" mode="ios">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-light ion-padding-center">แก้ไขรายชื่อพนักงาน</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card *ngIf="currentUser.id">
+  <ion-item>
+    <ion-label for="personnel_img" position="floating">Image</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="personnel_img"
+      [(ngModel)]="currentUser.personnel_img"
+      name="personnel_img" >
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label for="personnel_fname" position="floating">First Name</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="personnel_fname"
+      [(ngModel)]="currentUser.personnel_fname"
+      name="personnel_fname" >
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating" for="personnel_lname">Last Name</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="personnel_lname"
+      [(ngModel)]="currentUser.personnel_lname"
+      name="personnel_lname">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating" for="personnel_caedID">card ID</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="personnel_caedID"
+      [(ngModel)]="currentUser.personnel_caedID"
+      name="personnel_caedID">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating" for="personnel_phone">Phone Number</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="personnel_phone"
+      [(ngModel)]="currentUser.personnel_phone"
+      name="personnel_phone">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating" for="personnel_email">Email</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="personnel_email"
+      [(ngModel)]="currentUser.personnel_email"
+      name="personnel_email">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="floating" for="personnel_username">User Name</ion-label>
+    <ion-input 
+      placeholder="Enter text"
+      id="personnel_username"
+      [(ngModel)]="currentUser.personnel_username"
+      name="personnel_username">
+    </ion-input>
+  </ion-item>
+
+  <!-- <ion-item>
+    <ion-label><strong>Status:</strong></ion-label>
+    {{ currentProduct.product_published ? "จัดส่งแล้ว" : "รอการจัดส่ง..." }}
+  </ion-item> -->
+
+  <!-- <ion-button 
+    *ngIf="currentProduct.product_published"
+    (click)="updatePublished(false)" 
+    fill="outline"
+    color="medium">
+    รอการจัดส่ง...
+  </ion-button>
+
+  <ion-button 
+    *ngIf="!currentProduct.product_published"
+    (click)="updatePublished(true)"
+    fill="outline"
+    color="medium">
+    จัดส่งแล้ว
+  </ion-button> -->
+
+  <ion-button (click)="deletePersonnel()" color="danger">
+    Delete
+  </ion-button>
+
+  <ion-button (click)="updatePersonnel()" color="success">
+    Update
+  </ion-button>
+
+  <ion-item>
+    <p>{{ message }}</p>
+  </ion-item>
+  
+  <!-- <ion-item *ngIf="!currentPersonnel.id">
+    <br />
+    <p>Cannot access this Personnel...</p>
+  </ion-item> -->
+
+</ion-card>

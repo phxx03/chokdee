@@ -13,7 +13,7 @@ export class AppComponent {
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
-  username?: string;
+  personnel_username?: string;
 
   constructor(private tokenStorageService: TokenStorageService, private menuCtrl: MenuController) { }
 
@@ -27,7 +27,7 @@ export class AppComponent {
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
-      this.username = user.username;
+      this.personnel_username = user.personnel_username;
     }
   }
 

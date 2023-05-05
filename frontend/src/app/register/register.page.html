@@ -8,20 +8,26 @@
 </ion-header>
 
 <ion-card>
+  <div class="card card-container">
     <form
       *ngIf="!isSuccessful"
       name="form"
       (ngSubmit)="f.form.valid && onSubmit()"
       #f="ngForm"
       novalidate>
-      
+
       <ion-item>
         <ion-label position="floating">
           รูปภาพ
         </ion-label>
         <ion-input 
           placeholder="Enter text" 
-          id="ps_img" required 
+          type="text"
+          class="form-control"
+          name="personnel_img"
+          [(ngModel)]="form.personnel_img"
+          required
+          #personnel_img="ngModel"
           >
         </ion-input>
       </ion-item>
@@ -32,7 +38,12 @@
         </ion-label>
         <ion-input 
           placeholder="Enter text" 
-          id="first_name" required 
+          type="text"
+          class="form-control"
+          name="personnel_fname"
+          [(ngModel)]="form.personnel_fname"
+          required
+          #personnel_fname="ngModel"
           >
         </ion-input>
       </ion-item>
@@ -43,7 +54,12 @@
         </ion-label>
         <ion-input 
           placeholder="Enter text" 
-          id="last_name" required 
+          type="text"
+          class="form-control"
+          name="personnel_lname"
+          [(ngModel)]="form.personnel_lname"
+          required
+          #personnel_lname="ngModel"
           >
         </ion-input>
       </ion-item>
@@ -54,7 +70,13 @@
         </ion-label>
         <ion-input 
           placeholder="Enter text" 
-          id="card_id" required 
+          type="text"
+          class="form-control"
+          name="personnel_caedID"
+          [(ngModel)]="form.personnel_caedID"
+          required
+          maxlength="13"
+          #personnel_caedID="ngModel"
           >
         </ion-input>
       </ion-item>
@@ -65,7 +87,13 @@
         </ion-label>
         <ion-input 
           placeholder="Enter text" 
-          id="phone_number" required 
+          type="text"
+          class="form-control"
+          name="personnel_phone"
+          [(ngModel)]="form.personnel_phone"
+          required
+          maxlength="10"
+          #personnel_phone="ngModel"
           >
         </ion-input>
       </ion-item>
@@ -78,20 +106,20 @@
           placeholder="Enter text" 
           type="text"
           class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
+          name="personnel_username"
+          [(ngModel)]="form.personnel_username"
           required
           minlength="3"
           maxlength="20"
-          #username="ngModel"
+          #personnel_username="ngModel"
           >
         </ion-input>
-        <div class="alert-danger" *ngIf="username.errors && f.submitted">
-          <div *ngIf="username.errors['required']">Username is required</div>
-          <div *ngIf="username.errors['minlength']">
+        <div class="alert-danger" *ngIf="personnel_username.errors && f.submitted">
+          <div *ngIf="personnel_username.errors['required']">Username is required</div>
+          <div *ngIf="personnel_username.errors['minlength']">
             Username must be at least 3 characters
           </div>
-          <div *ngIf="username.errors['maxlength']">
+          <div *ngIf="personnel_username.errors['maxlength']">
             Username must be at most 20 characters
           </div>
         </div>
@@ -103,18 +131,18 @@
         </ion-label>
         <ion-input 
           placeholder="Enter text" 
-          type="email"
+          type="personnel_email"
           class="form-control"
-          name="email"
-          [(ngModel)]="form.email"
+          name="personnel_email"
+          [(ngModel)]="form.personnel_email"
           required
-          email
-          #email="ngModel"
+          personnel_email
+          #personnel_email="ngModel"
           >
         </ion-input>
-        <div class="alert-danger" *ngIf="email.errors && f.submitted">
-          <div *ngIf="email.errors['required']">Email is required</div>
-          <div *ngIf="email.errors['email']">
+        <div class="alert-danger" *ngIf="personnel_email.errors && f.submitted">
+          <div *ngIf="personnel_email.errors['required']">Email is required</div>
+          <div *ngIf="personnel_email.errors['email']">
             Email must be a valid email address
           </div>
         </div>
@@ -126,26 +154,29 @@
         </ion-label>
         <ion-input 
           placeholder="Enter text"  
-          type="password"
+          type="personnel_password"
           class="form-control"
-          name="password"
+          name="personnel_password"
           placeholder="Enter text" 
-          id="password" required 
-          [(ngModel)]="form.password"
-          #password="ngModel"
+          id="personnel_password" required 
+          [(ngModel)]="form.personnel_password"
+          #personnel_password="ngModel"
           >
         </ion-input>
-        <div class="alert-danger" *ngIf="password.errors && f.submitted">
-          <div *ngIf="password.errors['required']">Password is required</div>
-          <div *ngIf="password.errors['minlength']">
+        <div class="alert-danger" *ngIf="personnel_password.errors && f.submitted">
+          <div *ngIf="personnel_password.errors['required']">Password is required</div>
+          <div *ngIf="personnel_password.errors['minlength']">
             Password must be at least 6 characters
           </div>
         </div>
       </ion-item>
 
-      <ion-button class="form-group" expand="block" color="success">
+      <!-- <ion-button class="form-group" expand="block" color="success">
         Sign Up
-      </ion-button>
+      </ion-button> -->
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Sign Up</button>
+      </div>
 
       <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
         Signup failed!<br />{{ errorMessage }}
@@ -155,4 +186,92 @@
     <div class="alert alert-success" *ngIf="isSuccessful">
       Your registration is successful!
     </div>
+  </div>
 </ion-card>
+
+<!-- <div class="col-md-12">
+  <div class="card card-container">
+    <img
+      id="profile-img"
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      class="profile-img-card"
+    /> 
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          [(ngModel)]="form.personnel_username"
+          required
+          minlength="3"
+          maxlength="20"
+          #username="ngModel"
+        />
+        <div class="alert-danger" *ngIf="username.errors && f.submitted">
+          <div *ngIf="username.errors['required']">Username is required</div>
+          <div *ngIf="username.errors['minlength']">
+            Username must be at least 3 characters
+          </div>
+          <div *ngIf="username.errors['maxlength']">
+            Username must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          [(ngModel)]="form.personnel_email"
+          required
+          email
+          #email="ngModel"
+        />
+        <div class="alert-danger" *ngIf="email.errors && f.submitted">
+          <div *ngIf="email.errors['required']">Email is required</div>
+          <div *ngIf="email.errors['personnel_email']">
+            Email must be a valid email address
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="form.personnel_password"
+          required
+          minlength="6"
+          #password="ngModel"
+        />
+        <div class="alert-danger" *ngIf="password.errors && f.submitted">
+          <div *ngIf="password.errors['required']">Password is required</div>
+          <div *ngIf="password.errors['minlength']">
+            Password must be at least 6 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Sign Up</button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Signup failed!<br />{{ errorMessage }}
+      </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Your registration is successful!
+    </div>
+  </div>
+</div> -->

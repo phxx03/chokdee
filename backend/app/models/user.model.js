@@ -1,28 +1,54 @@
+// const sql = require("./db.js");
+
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("users", {
-      username: {
+      personnel_role: {
         type: Sequelize.STRING
       },
-      email: {
+      personnel_username: {
         type: Sequelize.STRING
       },
-      password: {
+      personnel_email: {
+        type: Sequelize.STRING
+      },
+      personnel_password: {
+        type: Sequelize.STRING
+      },
+      personnel_fname: {
+        type: Sequelize.STRING
+      },
+      personnel_lname: {
+        type: Sequelize.STRING
+      },
+      personnel_caedID: {
+        type: Sequelize.STRING
+      },
+      personnel_phone: {
+        type: Sequelize.STRING
+      },
+      personnel_img: {
         type: Sequelize.STRING
       }
     });
-  
+    
     return User;
-  };
 
+};
 //----------------------------------------------------
 
 // const sql = require("./db.js");
 
-// // constructor
+// constructor
 // const Users = function(users) {
-//   this.username = users.username;
-//   this.password = users.password;
-//   this.role= users.role;
+//   this.personnel_username = users.personnel_username;
+//   this.personnel_email = users.personnel_email;
+//   this.personnel_password= users.personnel_password;
+//   this.personnel_fname= users.personnel_fname;
+//   this.personnel_lname= users.personnel_lname;
+//   this.personnel_caedID= users.personnel_caedID;
+//   this.personnel_phone= users.personnel_phone;
+//   this.personnel_img= users.personnel_img;
+//   this.personnel_role= users.personnel_role;
   
 // };
 
@@ -40,8 +66,27 @@ module.exports = (sequelize, Sequelize) => {
 // };
 
 
-// Users.login = (req, result) => {
-//   sql.query("SELECT * FROM Users WHERE username = ? AND password= ?",[req.body.username,req.body.password], (err, res) => {
+// // Users.login = (req, result) => {
+// //   sql.query("SELECT * FROM Users WHERE personnel_username = ? AND personnel_password= ?",[req.body.username,req.body.password], (err, res) => {
+// //     if (err) {
+// //       console.log("error: ", err);
+// //       result(err, null);
+// //       return;
+// //     }
+
+// //     if (res.length) {
+// //       console.log("found tutorial: ", res[0]);
+// //       result(null, res[0]);
+// //       return;
+// //     }
+
+// //     // not found Tutorial with the id
+// //     result({ kind: "not_found" }, null);
+// //   });
+// // };
+
+// Users.findById = (id, result) => {
+//   sql.query(`SELECT * FROM users WHERE id = ${id}`, (err, res) => {
 //     if (err) {
 //       console.log("error: ", err);
 //       result(err, null);
@@ -49,18 +94,18 @@ module.exports = (sequelize, Sequelize) => {
 //     }
 
 //     if (res.length) {
-//       console.log("found tutorial: ", res[0]);
+//       console.log("found product: ", res[0]);
 //       result(null, res[0]);
 //       return;
 //     }
 
-//     // not found Tutorial with the id
+//     // not found Product with the id
 //     result({ kind: "not_found" }, null);
 //   });
 // };
-// Users.getAll = ( result) => {
-//   let query = "SELECT * FROM Users WHERE role='user'";
 
+// Users.getAll = (result) => {
+//   let query = "SELECT * FROM users";
   
 //   sql.query(query, (err, res) => {
 //     if (err) {
@@ -73,10 +118,20 @@ module.exports = (sequelize, Sequelize) => {
 //     result(null, res);
 //   });
 // };
+
+
 // Users.updateById = (id, users, result) => {
 //   sql.query(
-//     "UPDATE Users SET username = ?, password = ?, role = ? WHERE id = ?",
-//     [users.username, users.password, users.role, id],
+//     "UPDATE Users SET personnel_username = ?, personnel_email = ?, personnel_password = ?, personnel_fname = ?, personnel_lname = ?, personnel_caedID = ?, personnel_phone = ?, personnel_img = ? WHERE id = ?",
+//     [users.personnel_username,
+//       users.personnel_email,
+//       users.personnel_password,
+//       users.personnel_fname,
+//       users.personnel_lname,
+//       users.personnel_caedID,
+//       users.personnel_phone,
+//       users.personnel_img,
+//       id],
 //     (err, res) => {
 //       if (err) {
 //         console.log("error: ", err);
@@ -115,5 +170,9 @@ module.exports = (sequelize, Sequelize) => {
 //   });
 // };
 
+  
+// return User;
 
-// module.exports = Users;
+// };
+
+// // module.exports = Users;

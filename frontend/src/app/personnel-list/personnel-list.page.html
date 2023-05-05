@@ -8,30 +8,30 @@
 </ion-header>
 
 
-  <ion-searchbar mode="ios" placeholder="ชื่อสินค้า" [(ngModel)]="product_name" ></ion-searchbar>
+  <!-- <ion-searchbar mode="ios" placeholder="ชื่อสินค้า" [(ngModel)]="product_name" ></ion-searchbar> -->
   <ion-card>
     <ion-list
-        *ngFor="let product of products; let i = index"
+        *ngFor="let user of users; let i = index"
         [class.active]="i == currentIndex"
-        (click)="goToDetailPage(product.id)"
+        (click)="goToDetailPage(user.id)"
       >
         <ion-item>
           <ion-thumbnail slot="start">
-          <img src= "{{ product.product_img }}" />
+          <img src= "{{ user.personnel_img }}" />
           </ion-thumbnail>
           <ion-label>
-            <h2>{{ product.product_name }}</h2>
-            <small>{{ product.product_description }}</small>
+            <h2>{{ user.personnel_username }}</h2>
+            <small>{{ user.personnel_email }}</small>
           </ion-label>
           
-          <a [class.active]="i == currentIndex">
-            {{ product.product_quantity }}
-          </a>
+          <!-- <a [class.active]="i == currentIndex">
+            {{ personnel.personnel_quantity }}
+          </a> -->
       </ion-item>
     </ion-list>
-    <button (click)="removeAllProducts()">
+    <!-- <button (click)="removeAllProducts()">
       Remove All
-    </button>
+    </button> -->
     <ion-infinite-scroll>
       <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
     </ion-infinite-scroll>

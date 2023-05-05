@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const db = require("../models");
-const User = db.user;
+const User = db.users;
 
 verifyToken = (req, res, next) => {
   let token = req.session.token;
@@ -25,8 +25,8 @@ verifyToken = (req, res, next) => {
 
 isAdmin = async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.userId);
-    const roles = await user.getRoles();
+    const users = await User.findByPk(req.userId);
+    const roles = await users.getRoles();
 
     for (let i = 0; i < roles.length; i++) {
       if (roles[i].name === "admin") {
@@ -46,8 +46,8 @@ isAdmin = async (req, res, next) => {
 
 isModerator = async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.userId);
-    const roles = await user.getRoles();
+    const users = await User.findByPk(req.userId);
+    const roles = await users.getRoles();
 
     for (let i = 0; i < roles.length; i++) {
       if (roles[i].name === "moderator") {
@@ -67,8 +67,8 @@ isModerator = async (req, res, next) => {
 
 isModeratorOrAdmin = async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.userId);
-    const roles = await user.getRoles();
+    const users = await User.findByPk(req.userId);
+    const roles = await users.getRoles();
 
     for (let i = 0; i < roles.length; i++) {
       if (roles[i].name === "moderator") {

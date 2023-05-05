@@ -1,0 +1,52 @@
+<ion-header class="header" mode="ios">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-light ion-padding-center">รายละเอียดพนักงาน</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card>  
+  <ion-item>
+    <ion-label><strong>Image:</strong></ion-label>
+    {{ currentUser.personnel_img }}
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>card ID:</strong></ion-label>
+    {{ currentUser.personnel_caedID }}
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>First Name:</strong></ion-label>
+    {{ currentUser.personnel_fname }}
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>Last Name:</strong></ion-label>
+    {{ currentUser.personnel_lname }}
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>Phone Number:</strong></ion-label>
+    {{ currentUser.personnel_phone }}
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>Email:</strong></ion-label>
+    {{ currentUser.personnel_email }}
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>User Name:</strong></ion-label>
+    {{ currentUser.personnel_username }}
+  </ion-item>
+<!-- <ion-item>
+    <ion-label><strong>Status:</strong></ion-label>
+    {{ currentUser.product_published ? "จัดส่งแล้ว" : "รอการจัดส่ง..." }}
+  </ion-item> -->
+
+  <ion-button routerLink="/personnel-edit/{{ currentUser.id }}" expand="block" color="warning">
+    Edit
+  </ion-button>
+
+    <div *ngIf="!currentUser">
+      <br />
+      <p>Please click on a Product...</p>
+    </div>
+</ion-card>

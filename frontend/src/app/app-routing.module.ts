@@ -73,16 +73,8 @@ const routes: Routes = [
     loadChildren: () => import('./product-edit/product-edit.module').then( m => m.ProductEditPageModule)
   },
   {
-    path: 'menubar',
-    loadChildren: () => import('./menubar/menubar.module').then( m => m.MenubarPageModule)
-  },
-  {
     path: 'personnel-list',
     loadChildren: () => import('./personnel-list/personnel-list.module').then( m => m.PersonnelListPageModule)
-  },
-  {
-    path: 'personnel-add',
-    loadChildren: () => import('./personnel-add/personnel-add.module').then( m => m.PersonnelAddPageModule)
   },
   {
     path: 'order',
@@ -91,6 +83,22 @@ const routes: Routes = [
   {
     path: 'order-list',
     loadChildren: () => import('./order-list/order-list.module').then( m => m.OrderListPageModule)
+  },
+  {
+    path: 'personnel-details',
+    loadChildren: () => import('./personnel-details/personnel-details.module').then( m => m.PersonnelDetailsPageModule)
+  },
+  {
+    path: 'personnel-details/:id',
+    loadChildren: () => import('./personnel-details/personnel-details.module').then( m => m.PersonnelDetailsPageModule)
+  },
+  {
+    path: 'personnel-edit',
+    loadChildren: () => import('./personnel-edit/personnel-edit.module').then( m => m.PersonnelEditPageModule)
+  },
+  {
+    path: 'personnel-edit/:id',
+    loadChildren: () => import('./personnel-edit/personnel-edit.module').then( m => m.PersonnelEditPageModule)
   },
 ];
 
