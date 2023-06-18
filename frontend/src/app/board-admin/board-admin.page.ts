@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { Tutorial } from '../models/tutorial.model';
 import { TutorialService } from '../_services/tutorial.service';
+import { AuthService } from '../_services/auth.service';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -15,14 +17,23 @@ export class BoardAdminPage implements OnInit {
     product_name: '',
     product_brand: '',
     product_description: '',
+    product_price: 20,
     product_img: '',
-    product_quantity: '',
+    product_quantity: 100,
     product_other_detail: '',
     product_published: false
   };
   submitted = false;
 
-  constructor(private userService: UserService,private tutorialService: TutorialService) { }
+  selectedFiles: FileList | undefined;
+  
+
+  constructor(
+    private userService: UserService,
+    private tutorialService: TutorialService,
+    private authService: AuthService,
+    private navCtrl: NavController
+    ) { }
 
   ngOnInit(): void {
     this.userService.getAdminBoard().subscribe({
@@ -40,20 +51,64 @@ export class BoardAdminPage implements OnInit {
       product_name: this.product.product_name,
       product_brand: this.product.product_brand,
       product_description: this.product.product_description,
+      product_price: this.product.product_price,
       product_img: this.product.product_img,
       product_quantity: this.product.product_quantity,
       product_other_detail: this.product.product_other_detail
     };
-
-    this.tutorialService.create(data)
-      .subscribe({
-        next: (res) => {
+  
+    // Check if there are selected files
+    if (this.selectedFiles && this.selectedFiles.length > 0) {
+      const file = this.selectedFiles.item(0);
+      if (file) {
+        // Check if the file is an image
+        if (file.type.startsWith('image/')) {
+          // Call the uploadFiles() method from TutorialService
+          this.authService.uploadFiles(file).subscribe(
+            (event: any) => {
+              if (event.body) {
+                // Get the filename from the response
+                const filename = event.body.filename;
+                // Update the data object with the filename
+                data.product_img = filename;
+                // Call the create() method from TutorialService with the updated data
+                this.tutorialService.create(data).subscribe(
+                  (res) => {
+                    console.log(res);
+                    this.submitted = true;
+                  },
+                  (err) => {
+                    console.error(err);
+                    // Handle error during product creation
+                  }
+                );
+              }
+            },
+            (err) => {
+              console.error(err);
+              // Handle error if file upload fails
+            }
+          );
+        } else {
+          // File is not an image
+          // Handle invalid file format error
+        }
+      }
+    } else {
+      // No file selected, call the create() method from TutorialService
+      this.tutorialService.create(data).subscribe(
+        (res) => {
           console.log(res);
           this.submitted = true;
         },
-        error: (e) => console.error(e)
-      });
+        (err) => {
+          console.error(err);
+          // Handle error during product creation
+        }
+      );
+    }
   }
+  
 
   newProduct(): void {
     this.submitted = false;
@@ -61,11 +116,20 @@ export class BoardAdminPage implements OnInit {
       product_name: '',
       product_brand: '',
       product_description: '',
+      product_price: 20,
       product_img: '',
-      product_quantity: '',
+      product_quantity: 100,
       product_other_detail: '',
       product_published: false
     };
   }
 
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
+  
+  goBack() {
+    this.navCtrl.back();
+  }
+  
 }

@@ -1,0 +1,74 @@
+ion-header {
+    ion-toolbar {
+    --border-radius: 20px;
+  }
+
+  ion-title {
+    color: var(--ion-color-light);
+  }
+}
+
+ion-content {
+  --ion-background-color: var(--ion-color-medium);
+}
+
+ion-card {
+  ion-card-content {
+    padding: 20px;
+  }
+  
+  form {
+    ion-item {
+      ion-label {
+        color: var(--ion-color-primary);
+      }
+    }
+
+    .ion-text-danger {
+      color: var(--ion-color-danger);
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    ion-button {
+      margin-top: 20px;
+    }
+  }
+}
+
+ion-item {
+  --background: #ffffff;
+  --border-radius: 10px;
+}
+
+// login.page.scss
+
+/* เปลี่ยนสีพื้นหลังของหน้าเว็บ */
+ion-content {
+  background-color: #f1f1f1;
+}
+
+/* ปรับสไตล์ของช่องป้อนข้อมูล */
+ion-input {
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+/* ปรับสีตัวอักษรของปุ่ม Login */
+// ion-button {
+//   color: #ffffff;
+//   background-color: #007bff;
+// }
+
+.custom-button {
+  --border-radius: 20px;
+  --background: linear-gradient(to right, #ff6f61, #ff9b61);
+  --box-shadow: 0 2px 8px rgba(255, 155, 97, 0.3);
+}
+
+/* แสดงข้อความแจ้งเตือน */
+.alert {
+  color: #dc3545;
+  margin-top: 10px;
+}

@@ -1,42 +1,47 @@
 <ion-header class="header" mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+      <ion-button size="small" (click)="goBack()" icon-start>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title class="ion-padding-center">Product </ion-title>
+    <ion-title class="ion-padding-center">รายการสินค้า</ion-title>
   </ion-toolbar>
 </ion-header>
 
-
-  <ion-searchbar mode="ios" placeholder="ชื่อสินค้า" [(ngModel)]="product_name" ></ion-searchbar>
-  <ion-card>
-    <ion-list
-        *ngFor="let product of products; let i = index"
-        [class.active]="i == currentIndex"
-        (click)="goToDetailPage(product.id)"
-      >
-        <ion-item>
-          <ion-thumbnail slot="start">
-          <img src= "{{ product.product_img }}" />
-          </ion-thumbnail>
-          <ion-label>
-            <h2>{{ product.product_name }}</h2>
-            <small>{{ product.product_description }}</small>
-          </ion-label>
-          
-          <a [class.active]="i == currentIndex">
-            {{ product.product_quantity }}
-          </a>
-      </ion-item>
-    </ion-list>
-    <button (click)="removeAllProducts()">
-      Remove All
-    </button>
-    <ion-infinite-scroll>
-      <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ion-card>
-    
-      
-
-    
+<div class="product-list-content">
+  <ion-searchbar mode="ios" placeholder="ค้นหาสินค้า" [(ngModel)]="searchText"></ion-searchbar>
+  <ion-segment [(ngModel)]="sortOrder">
+    <ion-segment-button value="name">
+      Sort by Name
+    </ion-segment-button>
+    <ion-segment-button value="quantity">
+      Sort by Quantity
+    </ion-segment-button>
+  </ion-segment>
+  
+  <ion-list>
+    <ion-item *ngFor="let product of filteredProducts; let i = index" [class.active]="i == currentIndex" (click)="goToDetailPage(product.id)">
+      <ion-thumbnail slot="start">
+        <img [src]="getSafeImageURL(product.product_img)"/>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ product.product_name }}</h2>
+        <p>{{ product.product_description }}</p>
+      </ion-label>
+      <div class="item-right">
+        <a class="stock-info">
+          <ion-icon name="cube-outline" class="stock-icon"></ion-icon>
+          <span class="stock-quantity" [class.active]="i == currentIndex">{{ product.product_quantity }}</span>
+        </a>
+        <!-- ปุ่มแก้ไข -->
+        <ion-button fill="clear" class="edit-button">
+          <ion-icon name="pencil"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll>
+    <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</div>

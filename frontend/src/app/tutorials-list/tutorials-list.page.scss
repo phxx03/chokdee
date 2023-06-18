@@ -1,0 +1,91 @@
+/* Header */
+.header {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ccc;
+}
+
+.header .toolbar-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Product List Content */
+.product-list-content {
+  padding: 10px;
+}
+
+/* Product Item */
+ion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+ion-thumbnail {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+ion-label {
+  flex: 1;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.stock-info {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #999;
+  --ion-padding-start: 0;
+}
+
+.stock-icon {
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+.stock-quantity {
+  font-weight: bold;
+  color: #ff0000; /* เปลี่ยนสีตัวหนังสือเป็นสีแดง */
+}
+
+.stock-quantity::before {
+  content: "\2022"; /* เพิ่มจุดเติมข้างหน้าจำนวนสินค้า */
+  font-size: 10px;
+  margin-right: 5px;
+  color: #ff0000; /* เปลี่ยนสีจุดเติมเป็นสีแดง */
+}
+
+.edit-button {
+  --color: #ffc40d; /* เปลี่ยนสีปุ่มเป็นสีฟ้า */
+  margin-left: auto; /* จัดตำแหน่งปุ่มไปทางขวา */
+  --ion-padding-start: 0;
+}
+
+.edit-button ion-icon {
+  font-size: 20px; /* เพิ่มขนาดไอคอน */
+}
+
+
+.product-list-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-right {
+  display: flex;
+  align-items: center;
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Tutorial } from '../models/tutorial.model';
 
@@ -41,5 +41,18 @@ export class TutorialService {
 
   findByProduct_name(product_name: any): Observable<Tutorial[]> {
     return this.http.get<Tutorial[]>(`${baseUrl}?product_name=${product_name}`);
+  }
+
+  uploadFiles(file: any): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', `${baseUrl}upload-image`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    let res =  this.http.request(req).pipe();
+    return res
   }
 }

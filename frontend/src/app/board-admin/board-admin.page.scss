@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  border: 1px solid #ccc;
+}
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 20px;
+  /* เพิ่มระยะห่างด้านขวาของช่องเพิ่มรูปภาพ */
+}
+
+.camera-icon {
+  font-size: 50px;
+  color: #666;
+}
+
+.upload-text {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #666;
+}
+
+.form-input {
+  margin-bottom: 20px;
+  /* เพิ่มระยะห่างด้านล่างของช่องกรอกข้อมูล */
+}
+
+.uploaded-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.uploaded-image img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* เพิ่มสไตล์อื่นๆ ตามต้องการ */
+
+.custom-item {
+  background-color: #f5f5f5;
+  /* เปลี่ยนสีพื้นหลังตามที่คุณต้องการ */
+  padding: 10px;
+  /* เพิ่มระยะห่างของช่องใส่ข้อมูล */
+}
+
+.custom-label {
+  color: #333333;
+  /* เปลี่ยนสีตัวอักษรตามที่คุณต้องการ */
+}
+
+.custom-input {
+  color: #666666;
+  /* เปลี่ยนสีตัวอักษรตามที่คุณต้องการ */
+}
+
+.custom-unit {
+  color: #999999;
+  /* เปลี่ยนสีตัวอักษรตามที่คุณต้องการ */
+}

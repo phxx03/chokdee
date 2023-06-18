@@ -2,14 +2,19 @@ const db = require("../models");
 const config = require("../config/auth.config.js");
 const User = db.users;
 const Role = db.role;
+const uploadFile = require("../middleware/upload");
+const path = require('path');
+const fs = require('fs');
+const BASE_DIR = process.cwd();
+const baseUrl = '/uploads/';
 
 const Op = db.Sequelize.Op;
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+
 exports.signup = async (req, res) => {
-  // Save User to Database
   try {
     const users = await User.create({
       personnel_fname: req.body.personnel_fname,
@@ -32,11 +37,10 @@ exports.signup = async (req, res) => {
         },
       });
 
-      const result = users.setRoles(roles);
+      const result = await users.setRoles(roles);
       if (result) res.send({ message: "User registered successfully!" });
     } else {
-      // user has role = 1
-      const result = users.setRoles([1]);
+      const result = await users.setRoles([1]);
       if (result) res.send({ message: "User registered successfully!" });
     }
   } catch (error) {
@@ -68,7 +72,7 @@ exports.signin = async (req, res) => {
     }
 
     const token = jwt.sign({ id: users.id }, config.secret, {
-      expiresIn: 86400, // 24 hours
+      expiresIn: 86400,
     });
 
     let authorities = [];
@@ -99,4 +103,68 @@ exports.signout = async (req, res) => {
   } catch (err) {
     this.next(err);
   }
+};
+
+exports.uploadFiles = (req, res) => {
+  try {
+    console.log(req.file);
+
+    if (req.file == undefined) {
+      return res.send(`You must select a file.`);
+    }
+
+    User.create({
+      type: req.file.mimetype,
+      name: req.file.originalname,
+      data: fs.readFileSync(
+        path.join(BASE_DIR, 'uploads', req.file.filename)
+      ),
+    }).then((image) => {
+      fs.writeFileSync(
+        path.join(BASE_DIR, 'uploads', image.name),
+        image.data
+      );
+
+      return res.send(`File has been uploaded.`);
+    });
+  } catch (error) {
+    console.log(error);
+    return res.send(`Error when trying upload images: ${error}`);
+  }
+};
+
+exports.getListFiles = (req, res) => {
+  const directoryPath = path.join(BASE_DIR, 'uploads');
+
+  fs.readdir(directoryPath, function (err, files) {
+    if (err) {
+      res.status(500).send({
+        message: "Unable to scan files!",
+      });
+    }
+
+    let fileInfos = [];
+
+    files.forEach((file) => {
+      fileInfos.push({
+        name: file,
+        url: baseUrl + file,
+      });
+    });
+
+    res.status(200).send(fileInfos);
+  });
+};
+
+exports.download = (req, res) => {
+  const fileName = req.params.name;
+  const directoryPath = path.join(BASE_DIR, 'uploads');
+
+  res.download(path.join(directoryPath, fileName), fileName, (err) => {
+    if (err) {
+      res.status(500).send({
+        message: "Could not download the file. " + err,
+      });
+    }
+  });
 };

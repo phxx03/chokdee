@@ -1,81 +1,86 @@
 <ion-header class="header" mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+      <ion-button size="small" (click)="goBack()" icon-start>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title class=" ion-padding-center">เพิ่มรายการสินค้า</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-card *ngIf="!submitted">
+
+  <ion-item>
+    <input type="file" #fileInput style="display: none" (change)="selectFile($event)" />
+    <div class="upload-box" (click)="fileInput.click()">
+      <ion-icon name="camera" class="camera-icon"></ion-icon>
+      <div class="upload-text">เลือกรูปภาพ</div>
+    </div>
+    <ion-icon *ngIf="selectedFiles" name="checkmark-circle-outline" class="selected-icon"></ion-icon>
+    <span *ngIf="selectedFiles" class="file-name">{{ selectedFiles.item(0)?.name }}</span>
+  </ion-item>
+
   <ion-item>
     <ion-label position="floating">
-      Name of Product
+      ชื่อสินค้า
     </ion-label>
-    <ion-input 
-      placeholder="Enter text" 
-      id="product_name" required 
-      [(ngModel)]="product.product_name">
+    <ion-input placeholder="Enter text" id="product_name" required [(ngModel)]="product.product_name">
     </ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">
-      Name of Product Brand
+      ชื่อยี่ห้อสินค้า
     </ion-label>
-    <ion-input 
-      placeholder="Enter text" 
-      id="product_brand" required 
-      [(ngModel)]="product.product_brand">
+    <ion-input placeholder="Enter text" id="product_brand" required [(ngModel)]="product.product_brand">
     </ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">
-      Description
+      รายละเอียด
     </ion-label>
-    <ion-input 
-      placeholder="Enter text" 
-      id="product_description" required 
-      [(ngModel)]="product.product_description">
+    <ion-input placeholder="Enter text" id="product_description" required [(ngModel)]="product.product_description">
     </ion-input>
   </ion-item>
 
+  <ion-item class="custom-item">
+    <ion-label position="floating" class="custom-label">
+      ราคา
+    </ion-label>
+    <ion-input placeholder="Enter text" id="product_price" required type="number" [(ngModel)]="product.product_price"
+      class="custom-input">
+    </ion-input>
+    <ion-label position="after" class="custom-unit">
+      บาท
+    </ion-label>
+  </ion-item>
+
+  <ion-item class="custom-item">
+    <ion-label position="floating" class="custom-label">
+      จำนวนสินค้า
+    </ion-label>
+    <ion-input placeholder="Enter text" id="product_quantity" required type="number"
+      [(ngModel)]="product.product_quantity" class="custom-input">
+    </ion-input>
+    <ion-label position="after" class="custom-unit">
+      ชิ้น
+    </ion-label>
+  </ion-item>
+
+
+
   <ion-item>
     <ion-label position="floating">
-      Image of Product
+      รายละเอียดอื่นๆ
     </ion-label>
-    <ion-input 
-      placeholder="Enter text" 
-      id="product_img" required 
-      [(ngModel)]="product.product_img">
+    <ion-input placeholder="Enter text" id="product_other_detail" required [(ngModel)]="product.product_other_detail">
     </ion-input>
   </ion-item>
-  
-  <ion-item>
-    <ion-label position="floating">
-      Quantity of Product
-    </ion-label>
-    <ion-input 
-      placeholder="Enter text" 
-      id="product_quantity" required 
-      [(ngModel)]="product.product_quantity">
-    </ion-input>
-  </ion-item>
-  
-  <ion-item>
-    <ion-label position="floating">
-      Other Detail
-    </ion-label>
-    <ion-input 
-      placeholder="Enter text" 
-      id="product_other_detail" required 
-      [(ngModel)]="product.product_other_detail">
-    </ion-input>
-  </ion-item>
-  
-    <ion-button (click)="saveProduct()" expand="block" color="success">
-      Submit
-    </ion-button>
-  
+
+  <ion-button (click)="saveProduct()" expand="block" color="success">
+    เพิ่มสินค้า
+  </ion-button>
+
 </ion-card>

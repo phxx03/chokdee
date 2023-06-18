@@ -2,6 +2,7 @@ import { Component, OnInit, NgModule, CUSTOM_ELEMENTS_SCHEMA, Input  } from '@an
 import { user } from 'src/app/models/user.model';
 import { UserService } from '../_services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-personnel-details',
@@ -29,6 +30,7 @@ export class PersonnelDetailsPage implements OnInit {
     private userService: UserService,
     private router: Router, // inject Router และ ActivatedRoute เข้ามาใน constructor
     private route: ActivatedRoute,
+    private navCtrl: NavController
     ) { }
 
     ngOnInit(): void {
@@ -101,5 +103,9 @@ export class PersonnelDetailsPage implements OnInit {
           error: (e) => console.error(e)
         });
     }
-  
+    
+    goBack() {
+      this.navCtrl.back();
+    }
+    
   }

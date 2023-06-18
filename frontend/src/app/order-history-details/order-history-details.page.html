@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button size="small" (click)="goBack()" icon-start>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Order ID: {{ currentOrder.order_id }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-card *ngIf="currentOrder">
+    <ion-card-header>
+      <ion-card-subtitle>Order ID: {{ currentOrder.order_id }}</ion-card-subtitle>
+      <ion-card-title>Customer: {{ currentOrder.order_Customer }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Address:</strong> {{ currentOrder.order_Customer_Address }}</p>
+      <p><strong>Contact Number:</strong> {{ currentOrder.order_Customer_Contact }}</p>
+    </ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let orderProduct of orderProducts">
+        <ion-label>{{ orderProduct.product_name}}</ion-label>
+        <ion-label>Quantity: {{ orderProduct.order_Product_Quantity }}</ion-label>
+        <ion-label>Total Price: {{ orderProduct.order_Product_Total_Price | currency }}</ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-button size="small" color="primary" (click)="updateDeliveryStatus(currentOrder.order_Delivery_Status ? false : true)" *ngIf="currentOrder.order_Type_Delivery && currentOrder.order_Delivery_Status !== undefined" class="delivery-status-button">
+      {{ currentOrder.order_Delivery_Status ? 'ยกเลิกการจัดส่ง' : 'ยืนยันการจัดส่ง' }}
+    </ion-button>  
+       
+  </ion-card>
+  
+  <ion-card *ngIf="!currentOrder">
+    <ion-card-content>
+      No order details found.
+    </ion-card-content>
+  </ion-card>
+  

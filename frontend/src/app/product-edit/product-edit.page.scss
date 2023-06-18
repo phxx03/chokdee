@@ -1,0 +1,113 @@
+/* Header */
+.header {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ccc;
+}
+
+.header .toolbar-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+  
+  .text-light {
+    color: var(--ion-color-light);
+  }
+  
+  .product-card {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  ion-item {
+    --ion-text-color: var(--ion-color-dark);
+  }
+  
+  // ion-button {
+  //   margin-top: 10px;
+  // }
+  
+  ion-textarea {
+    height: 120px;
+  }
+  
+  ion-item p {
+    margin: 0;
+  }
+  
+  ion-item .ion-text {
+    font-weight: bold;
+  }
+  
+  .status-button {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .action-button {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  ion-item[lines='none']::part(form-field) {
+    border-bottom: none;
+  }
+  
+  ion-item[lines='none']::part(form-field)::part(textarea) {
+    padding-bottom: 0;
+  }
+  
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    border: 1px solid #ccc;
+  }
+  
+  .upload-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 20px; /* เพิ่มระยะห่างด้านขวาของช่องเพิ่มรูปภาพ */
+  }
+  
+  .camera-icon {
+    font-size: 50px;
+    color: #666;
+  }
+  
+  .upload-text {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .form-input {
+    margin-bottom: 20px; /* เพิ่มระยะห่างด้านล่างของช่องกรอกข้อมูล */
+  }
+  
+  .uploaded-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .uploaded-image img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  /* เพิ่มสไตล์อื่นๆ ตามต้องการ */
+  

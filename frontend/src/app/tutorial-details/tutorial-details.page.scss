@@ -1,4 +1,34 @@
-.edit-form {
-  max-width: 400px;
-  margin: auto;
+.header {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ccc;
+}
+
+.header .toolbar-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.text-light {
+  color: var(--ion-color-light);
+}
+
+.product-card {
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+ion-item {
+  --ion-text-color: var(--ion-color-dark);
+}
+
+// ion-button {
+//   margin-top: 20px;
+// }
+
+.no-product {
+  text-align: center;
+  margin-top: 20px;
 }

@@ -1,109 +1,103 @@
 <ion-header class="header" mode="ios">
-  <ion-toolbar color="dark">
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+      <ion-button size="small" (click)="goBack()" icon-start>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title class="text-light ion-padding-center">แก้ไขรายการสินค้า</ion-title>
+    <ion-title class="ion-padding-center">แก้ไขรายการสินค้า</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-card *ngIf="currentProduct.id">
-  <ion-item>
-    <ion-label for="product_name" position="floating">Name of Product</ion-label>
-    <ion-input 
-      placeholder="Enter text"
-      id="product_name"
-      [(ngModel)]="currentProduct.product_name"
-      name="product_name" >
-    </ion-input>
-  </ion-item>
 
-  <ion-item>
-    <ion-label position="floating" for="product_brand">Name of Product Brand</ion-label>
-    <ion-input 
-      placeholder="Enter text"
-      id="product_brand"
-      [(ngModel)]="currentProduct.product_brand"
-      name="product_brand">
-    </ion-input>
-  </ion-item>
-  
-  <ion-item>
-    <ion-label position="floating" for="product_description">Description</ion-label>
-    <ion-input 
-      placeholder="Enter text"
-      id="product_description"
-      [(ngModel)]="currentProduct.product_description"
-      name="product_description">
-    </ion-input>
-  </ion-item>
-  
-  <ion-item>
-    <ion-label position="floating" for="product_img">Image of Product</ion-label>
-    <ion-input 
-      placeholder="Enter text"
-      id="product_img"
-      [(ngModel)]="currentProduct.product_img"
-      name="product_img">
-    </ion-input>
-  </ion-item>
-  
-  <ion-item>
-    <ion-label position="floating" for="product_quantity">Quantity of Product</ion-label>
-    <ion-input 
-      placeholder="Enter text"
-      id="product_quantity"
-      [(ngModel)]="currentProduct.product_quantity"
-      name="product_quantity">
-    </ion-input>
-  </ion-item>
-  
-  <ion-item>
-    <ion-label position="floating" for="product_other_detail">Other Detail</ion-label>
-    <ion-input 
-      placeholder="Enter text"
-      id="product_other_detail"
-      [(ngModel)]="currentProduct.product_other_detail"
-      name="product_other_detail">
-    </ion-input>
-  </ion-item>
+  <ion-card class="product-card" *ngIf="currentProduct.id">
+    <ion-item>
+          <input type="file" #fileInput style="display: none" (change)="selectFile($event)" />
+          <div class="upload-box" (click)="fileInput.click()">
+            <ion-icon name="camera" class="camera-icon"></ion-icon>
+            <div class="upload-text">Select Image</div>
+          </div>
+          <ion-icon *ngIf="selectedFiles" name="checkmark-circle-outline" class="selected-icon"></ion-icon>
+          <span *ngIf="selectedFiles" class="file-name">{{ selectedFiles.item(0)?.name }}</span>
+        </ion-item>
 
-  <ion-item>
-    <ion-label><strong>Status:</strong></ion-label>
-    {{ currentProduct.product_published ? "จัดส่งแล้ว" : "รอการจัดส่ง..." }}
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating" for="product_name">ชื่อสินค้า</ion-label>
+      <ion-input
+        placeholder="กรอกข้อความ"
+        id="product_name"
+        [(ngModel)]="currentProduct.product_name"
+        name="product_name"
+      ></ion-input>
+    </ion-item>
 
-  <ion-button 
-    *ngIf="currentProduct.product_published"
-    (click)="updatePublished(false)" 
-    fill="outline"
-    color="medium">
-    รอการจัดส่ง...
-  </ion-button>
+    <ion-item>
+      <ion-label position="floating" for="product_brand">แบรนด์สินค้า</ion-label>
+      <ion-input
+        placeholder="กรอกข้อความ"
+        id="product_brand"
+        [(ngModel)]="currentProduct.product_brand"
+        name="product_brand"
+      ></ion-input>
+    </ion-item>
 
-  <ion-button 
-    *ngIf="!currentProduct.product_published"
-    (click)="updatePublished(true)"
-    fill="outline"
-    color="medium">
-    จัดส่งแล้ว
-  </ion-button>
+    <ion-item>
+      <ion-label position="floating" for="product_description">คำอธิบายสินค้า</ion-label>
+      <ion-textarea
+        placeholder="กรอกข้อความ"
+        id="product_description"
+        [(ngModel)]="currentProduct.product_description"
+        name="product_description"
+      ></ion-textarea>
+    </ion-item>
 
-  <ion-button (click)="deleteProduct()" color="danger">
-    Delete
-  </ion-button>
+    <ion-item>
+      <ion-label position="floating" for="product_quantity">จำนวนสินค้า</ion-label>
+      <ion-input
+        placeholder="กรอกข้อความ"
+        id="product_quantity"
+        [(ngModel)]="currentProduct.product_quantity"
+        name="product_quantity"
+      ></ion-input>
+    </ion-item>
 
-  <ion-button (click)="updateProduct()" color="success">
-    Update
-  </ion-button>
+    <ion-item>
+      <ion-label position="floating" for="product_price">ราคาสินค้า</ion-label>
+      <ion-input
+        placeholder="กรอกข้อความ"
+        id="product_price"
+        [(ngModel)]="currentProduct.product_price"
+        name="product_price"
+      ></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <p>{{ message }}</p>
-  </ion-item>
-  
-  <ion-item *ngIf="!currentProduct.id">
-    <br />
-    <p>Cannot access this Product...</p>
-  </ion-item>
+    <ion-item>
+      <ion-label position="floating" for="product_other_detail">รายละเอียดอื่น ๆ</ion-label>
+      <ion-textarea
+        placeholder="กรอกข้อความ"
+        id="product_other_detail"
+        [(ngModel)]="currentProduct.product_other_detail"
+        name="product_other_detail"
+      ></ion-textarea>
+    </ion-item>
 
-</ion-card>
+    <ion-button (click)="deleteProduct()" color="danger" expand="block" class="action-button">
+      ลบ
+    </ion-button>
+
+    <ion-button (click)="updateProduct()" color="success" expand="block" class="action-button">
+      อัปเดต
+    </ion-button>
+
+    <ion-item>
+      <ion-text>{{ message }}</ion-text>
+    </ion-item>
+
+    <ion-item *ngIf="!currentProduct.id">
+      <br />
+      <ion-text color="medium">
+        <p>ไม่สามารถเข้าถึงสินค้านี้ได้...</p>
+      </ion-text>
+    </ion-item>
+  </ion-card>
+

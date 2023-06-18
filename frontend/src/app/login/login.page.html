@@ -1,113 +1,58 @@
-<div class="col-md-12">
-  <div class="card card-container">
-     <!-- <img
-      id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="profile-img-card"
-    /> -->
-    <form
-      *ngIf="!isLoggedIn"
-      name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
-      #f="ngForm"
-      novalidate
-    >
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input
-          type="text"
-          class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
-          required
-          #username="ngModel"
-        />
+<ion-header class="ion-no-border">
+  <ion-toolbar color="medium">
+    <ion-title class="ion-text-center">เข้าสู่ระบบ</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+  <ion-card>
+    <ion-card-content>
+      <form *ngIf="!isLoggedIn" (ngSubmit)="onSubmit()" #f="ngForm">
+        <ion-item>
+          <ion-label position="floating">Username</ion-label>
+          <ion-input
+            type="text"
+            name="username"
+            [(ngModel)]="form.username"
+            required
+          ></ion-input>
+        </ion-item>
         <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="username.errors && f.submitted"
+          class="ion-text-danger"
+          *ngIf="f.submitted && f.form.controls['username'].invalid"
         >
           Username is required!
         </div>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          [(ngModel)]="form.password"
-          required
-          minlength="6"
-          #password="ngModel"
-        />
+
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input
+            type="password"
+            name="password"
+            [(ngModel)]="form.password"
+            required
+            minlength="6"
+          ></ion-input>
+        </ion-item>
         <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="password.errors && f.submitted"
+          class="ion-text-danger"
+          *ngIf="f.submitted && f.form.controls['password'].invalid"
         >
-          <div *ngIf="password.errors['required']">Password is required</div>
-          <div *ngIf="password.errors['minlength']">
+          <div *ngIf="f.form.controls['password'].errors?.['required']">
+            Password is required
+          </div>
+          <div *ngIf="f.form.controls['password'].errors?.['minlength']">
             Password must be at least 6 characters
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary btn-block">
+
+        <ion-button expand="full" color="primary" type="submit" class="custom-button">
           Login
-        </button>
-      </div>
-      <div class="form-group">
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="f.submitted && isLoginFailed"
-        >
+        </ion-button>
+
+        <div class="ion-text-danger" *ngIf="f.submitted && isLoginFailed">
           Login failed: {{ errorMessage }}
         </div>
-      </div>
-    </form>
-
-    <!-- <div class="alert alert-success" *ngIf="isLoggedIn">
-      Logged in as {{ roles }}.
-    </div> -->
-  </div>
-</div>
-
-<!-- <ion-app>
-  <ion-router-outlet></ion-router-outlet>
-</ion-app>
-<ion-header class="ion-no-border">
-  <ion-item lines="none" color="medium">
-    <ion-avatar slot="start">
-    </ion-avatar>
-    <ion-label class="ion-text-center">
-     
-    </ion-label>
-  </ion-item>
-</ion-header>
-
-<ion-content [fullscreen]="true" color="medium">
-  <ion-card >
-    <ion-card-header>
-      <ion-label class="ion-text-center">
-        <h1>เข้าสู่ระบบ</h1>
-      <br>
-      </ion-label>
-      <ion-item transparent>
-        <ion-icon name="person-sharp"></ion-icon><br>
-        <ion-input [(ngModel)]="Username" plceholder="Username" type="text"> :</ion-input>
-      </ion-item><br>
-      <ion-item transparent>
-        <ion-icon name="lock-closed-sharp"></ion-icon>
-        <ion-input [(ngModel)]="Password" plceholder="Password" type="Password"> :</ion-input>
-      </ion-item>
-      <br>
-      <div class="ion-text-center">
-        <ion-button color="primary" (click)="LoginOTP()">LOGIN</ion-button>
-      </div>
-
-    </ion-card-header>
+      </form>
+    </ion-card-content>
   </ion-card>
-
-</ion-content> -->

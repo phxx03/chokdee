@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TutorialService } from 'src/app/_services/tutorial.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tutorial } from 'src/app/models/tutorial.model';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tutorial-details',
@@ -16,8 +17,9 @@ export class TutorialDetailsPage implements OnInit {
     product_name: '',
     product_brand: '',
     product_description: '',
+    product_price: 20,
     product_img: '',
-    product_quantity: '',
+    product_quantity: 100,
     product_other_detail: '',
     product_published: false
   };
@@ -27,7 +29,9 @@ export class TutorialDetailsPage implements OnInit {
   constructor(
     private tutorialService: TutorialService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private navCtrl: NavController
+    ) { }
 
   ngOnInit(): void {
     if (!this.viewMode) {
@@ -58,6 +62,7 @@ export class TutorialDetailsPage implements OnInit {
       product_name: this.currentProduct.product_name,
       product_brand: this.currentProduct.product_brand,
       product_description: this.currentProduct.product_description,
+      product_price: this.currentProduct.product_price,
       product_img: this.currentProduct.product_img,
       product_quantity: this.currentProduct.product_quantity,
       product_other_detail: this.currentProduct.product_other_detail,
@@ -99,6 +104,10 @@ export class TutorialDetailsPage implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  goBack() {
+    this.navCtrl.back();
   }
 
 }

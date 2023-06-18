@@ -1,0 +1,37 @@
+.order-card-title {
+  margin-bottom: 10px;
+}
+
+.total-quantity,
+.total-price {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.delivery-status-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 36px;
+  border-radius: 20px;
+  background-color: var(--ion-color-primary);
+  color: white;
+  font-size: 14px;
+  margin-left: auto;
+}
+
+.delivery-status-button ion-icon {
+  margin-right: 5px;
+}
+
+.status-label {
+  margin-left: 5px;
+}

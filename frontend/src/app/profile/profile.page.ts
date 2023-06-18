@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { NgIf, NgTemplateOutlet } from '@angular/common'; // นำเข้าคุณสมบัติที่ต้องการ
 
 @Component({
   selector: 'app-profile',

@@ -1,57 +1,45 @@
-import { Component, OnInit, NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Tutorial } from '../models/tutorial.model';
 import { TutorialService } from '../_services/tutorial.service';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tutorials-list',
   templateUrl: './tutorials-list.page.html',
   styleUrls: ['./tutorials-list.page.scss'],
 })
-
 export class TutorialsListPage implements OnInit {
-
   products?: Tutorial[];
   currentProduct: Tutorial = {};
   currentIndex = -1;
-  product_name = '';
-  product_brand = '';
-  product_description = '';
-  product_img = '';
-  product_quantity = '';
-  product_other_detail = '';
-  product_published = false ;
+  searchText: string = '';
+  sortOrder: 'asc' | 'desc' = 'asc';
+  defaultImage = 'assets\timered.png'; // เส้นทางไปยังรูปภาพตัวอย่าง
 
   constructor(
     private tutorialService: TutorialService,
-    private router: Router, // inject Router และ ActivatedRoute เข้ามาใน constructor
+    private router: Router,
     private route: ActivatedRoute,
-    ) { }
+    private navCtrl: NavController
+  ) {}
 
   ngOnInit(): void {
     this.retrieveProducts();
-    // this.getProducts();
   }
 
-  // getProducts() {
-  //   this.tutorialService.getProducts()
-  //   .subscribe(products => this.products = products);
-  // }
-
   goToDetailPage(productID: number) {
-    this.router.navigate(['/details', productID]); // ใช้ Router.navigate() เพื่อนำทางไปยังหน้าอื่นๆ โดยกำหนด path และ parameter
+    this.router.navigate(['/details', productID]);
   }
 
   retrieveProducts(): void {
-    this.tutorialService.getAll()
-      .subscribe({
-        next: (data) => {
-          this.products = data;
-          console.log(data);
-        },
-        error: (e) => console.error(e)
-      });
+    this.tutorialService.getAll().subscribe({
+      next: (data) => {
+        this.products = data;
+      },
+      error: (e) => console.error(e),
+    });
   }
 
   refreshList(): void {
@@ -66,28 +54,73 @@ export class TutorialsListPage implements OnInit {
   }
 
   removeAllProducts(): void {
-    this.tutorialService.deleteAll()
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.refreshList();
-        },
-        error: (e) => console.error(e)
-      });
+    this.tutorialService.deleteAll().subscribe({
+      next: (res) => {
+        this.refreshList();
+      },
+      error: (e) => console.error(e),
+    });
   }
 
   searchProduct_name(): void {
     this.currentProduct = {};
     this.currentIndex = -1;
 
-    this.tutorialService.findByProduct_name(this.product_name)
-      .subscribe({
-        next: (data) => {
-          this.products = data;
-          console.log(data);
-        },
-        error: (e) => console.error(e)
-      });
+    this.tutorialService.findByProduct_name(this.searchText).subscribe({
+      next: (data) => {
+        this.products = data;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  get filteredProducts() {
+    const filtered = this.products?.filter((product) =>
+      product.product_name?.toLowerCase().includes(this.searchText?.toLowerCase())
+    );
+  
+    const sorted = filtered?.sort((a, b) => {
+      if (this.sortOrder === 'asc' || this.sortOrder === 'desc') {
+        if (this.sortOrder === 'asc') {
+          if (typeof a.product_name === 'string' && typeof b.product_name === 'string') {
+            return a.product_name.localeCompare(b.product_name);
+          }
+        } else if (this.sortOrder === 'desc') {
+          if (typeof a.product_name === 'string' && typeof b.product_name === 'string') {
+            return b.product_name.localeCompare(a.product_name);
+          }
+        }
+      } else if (this.sortOrder === 'quantity') {
+        if (typeof a.product_quantity === 'number' && typeof b.product_quantity === 'number') {
+          return a.product_quantity - b.product_quantity;
+        }
+      }
+      return 0;
+    });
+  
+    return sorted;
+  }
+  
+  
+  
+  toggleSortOrder() {
+    if (this.sortOrder === 'asc') {
+      this.sortOrder = 'desc';
+    } else {
+      this.sortOrder = 'asc';
+    }
+  }
+
+  getSafeImageURL(image: string | undefined): SafeUrl {
+    if (image) {
+
+      return "http://localhost:8080/uploads/"+image
+    }
+    return this.defaultImage;
+  }  
+
+  goBack() {
+    this.navCtrl.back();
   }
 
 }

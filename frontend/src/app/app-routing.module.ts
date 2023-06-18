@@ -16,17 +16,17 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
     path: 'profile',
@@ -99,6 +99,26 @@ const routes: Routes = [
   {
     path: 'personnel-edit/:id',
     loadChildren: () => import('./personnel-edit/personnel-edit.module').then( m => m.PersonnelEditPageModule)
+  },
+  {
+    path: 'order-cart',
+    loadChildren: () => import('./order-cart/order-cart.module').then( m => m.OrderCartPageModule)
+  },
+  {
+    path: 'order-chackout',
+    loadChildren: () => import('./order-chackout/order-chackout.module').then( m => m.OrderChackoutPageModule)
+  },
+  {
+    path: 'order-chackout2',
+    loadChildren: () => import('./order-chackout2/order-chackout2.module').then( m => m.OrderChackout2PageModule)
+  },
+  // {
+  //   path: 'order-history-details',
+  //   loadChildren: () => import('./order-history-details/order-history-details.module').then( m => m.OrderHistoryDetailsPageModule)
+  // },
+  {
+    path: 'order-history-details/:id',
+    loadChildren: () => import('./order-history-details/order-history-details.module').then( m => m.OrderHistoryDetailsPageModule)
   },
 ];
 

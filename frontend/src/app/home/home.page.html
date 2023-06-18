@@ -1,108 +1,67 @@
-<!----------------------------admin page---------------------------------->
 <ion-list class="navbar-nav mr-auto" routerLinkActive="active">
   <ion-grid [fixed]="true">
-    <ion-row>
-      <ion-col class="nav-link" *ngIf="showAdminBoard" routerLink="/order">
-        <ion-card color="tertiary">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-            <ion-card-content>
-              สั่งซื้อสินค้า
-            </ion-card-content>
-        </ion-card>
+    <ion-row class="menu-row">
+      <ion-col  class="nav-link" *ngIf="showAdminBoard" routerLink="/order">
+        <div class="custom-card secondary-card">
+          <ion-icon name="cart-outline" class="menu-icon"></ion-icon>
+          <ion-label class="menu-label">สั่งซื้อสินค้า</ion-label>
+        </div>
       </ion-col>
 
-      <ion-col offset="0.1" class="nav-link" *ngIf="showAdminBoard" routerLink="/list" >
-        <ion-card color="tertiary">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-            <ion-card-content>
-              รายการสินค้า
-            </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    
-    <ion-row>
-      <ion-col class="nav-link" *ngIf="showAdminBoard" routerLink="/admin">
-        <ion-card color="tertiary">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-            <ion-card-content>
-              เพิ่มรายการสินค้า
-            </ion-card-content>
-        </ion-card>
-      </ion-col>
-
-      <ion-col offset="0.1" class="nav-link" *ngIf="showAdminBoard" routerLink="/order-list">
-        <ion-card color="tertiary">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-          <ion-card-content>
-            คำสั่งซื้อย้อนหลัง
-          </ion-card-content>
-        </ion-card>
+      <ion-col  class="nav-link" *ngIf="showAdminBoard" routerLink="/list">
+        <div class="custom-card tertiary-card">
+          <ion-icon name="list-outline" class="menu-icon"></ion-icon>
+          <ion-label class="menu-label">รายการสินค้า</ion-label>
+        </div>
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col class="nav-link" *ngIf="showAdminBoard" routerLink="/personnel-list">
-        <ion-card color="tertiary">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-          <ion-card-content>
-            รายชื่อพนักงาน
-          </ion-card-content>
-        </ion-card>
+    <ion-row class="menu-row">
+      <ion-col  class="nav-link" *ngIf="showAdminBoard" routerLink="/admin">
+        <div class="custom-card tertiary-card">
+          <ion-icon name="add-outline" class="menu-icon"></ion-icon>
+          <ion-label class="menu-label">เพิ่มรายการสินค้า</ion-label>
+        </div>
       </ion-col>
 
-      <ion-col offset="0.1" class="nav-link" *ngIf="showAdminBoard" routerLink="/register">
-        <ion-card color="tertiary">
-        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-          <ion-card-content>
-            เพิ่มรายชื่อพนักงาน
-          </ion-card-content>
-        </ion-card>
+      <ion-col  class="nav-link" *ngIf="showAdminBoard" routerLink="/order-list">
+        <div class="custom-card secondary-card">
+          <ion-icon name="time-outline" class="menu-icon"></ion-icon>
+          <ion-label class="menu-label">คำสั่งซื้อย้อนหลัง</ion-label>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="menu-row">
+      <ion-col  class="nav-link" *ngIf="showAdminBoard" routerLink="/personnel-list">
+        <div class="custom-card secondary-card">
+          <ion-icon name="people-outline" class="menu-icon"></ion-icon>
+          <ion-label class="menu-label">รายชื่อพนักงาน</ion-label>
+        </div>
+      </ion-col>
+
+      <ion-col  class="nav-link" *ngIf="showAdminBoard" routerLink="/register">
+        <div class="custom-card tertiary-card">
+          <ion-icon name="person-add-outline" class="menu-icon"></ion-icon>
+          <ion-label class="menu-label">เพิ่มรายชื่อพนักงาน</ion-label>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="menu-row">
+      <ion-col  class="nav-link" *ngIf="showUser" routerLink="/order">
+        <div class="custom-card secondary-card">
+          <ion-icon name="cart-outline" class="menu-icon"></ion-icon>
+          <ion-label class="menu-label">สั่งซื้อสินค้า</ion-label>
+        </div>
+      </ion-col>
+
+      <ion-col  class="nav-link" *ngIf="showUser" routerLink="/order-list">
+        <div class="custom-card tertiary-card">
+          <ion-icon name="time-outline" class="menu-icon"></ion-icon>
+          <ion-label class="menu-label">คำสั่งซื้อย้อนหลัง</ion-label>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-list>
-
-<!-----------------------mod page------------------------------->
-
- <!-- <ion-card color="tertiary" class="nav-item" *ngIf="showModeratorBoard">
-    <ion-card-header class="nav-link" routerLink="/mod">
-      <ion-card-title>ผู้ดูแลบอร์ด</ion-card-title>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      Card Content
-    </ion-card-content>
-  </ion-card> -->
-
-
-<!-----------------------user page--------------------------->
-
-
-<!---------------------login page------------------------->
-
-<ion-list class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-
-  <ion-card >
-    <ion-card-header class="nav-link" routerLink="/register">
-      <ion-card-title>ลงทะเบียน</ion-card-title>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      Card Content
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card color="secondary">
-    <ion-card-header class="nav-link" routerLink="/login">
-      <ion-card-title>เข้าสู่ระบบ</ion-card-title>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      Card Content
-    </ion-card-content>
-  </ion-card>
 </ion-list>

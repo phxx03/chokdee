@@ -3,6 +3,7 @@ const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
 db.sequelize.sync();
+const fs = require("fs");
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -20,131 +21,19 @@ exports.allAccess = (req, res) => {
     res.status(200).send("Moderator Content.");
   };
 
-//------------------------------------------------------------
-
-
-// const Users = require("../models/user.model.js");
-
-// // Create and Save a new Users
-// exports.create = (req, res) => {
-
-//   console.log("aaaaaaaaaaa")
-//   // Validate request
-//   if (!req.body) {
-//     res.status(400).send({
-//       message: "Content can not be empty!"
-//     });
-//   }
-
-//   // Create a Tutorial
-//   const users = new Users({
-//     personnel_username: req.body.personnel_username,
-//     personnel_email: req.body.personnel_email,
-//     personnel_password: req.body.personnel_password,
-//     personnel_fname: req.body.personnel_fname,
-//     personnel_lname: req.body.personnel_lname,
-//     personnel_caedID: req.body.personnel_caedID,
-//     personnel_phone: req.body.personnel_phone,
-//     personnel_img: req.body.personnel_img,
-//     personnel_role: req.body.personnel_role || "user"
-
-//   });
-
-//   // Save Users in the database
-//   Users.create(users, (err, data) => {
-//     if (err)
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while creating the Users."
-//       });
-//     else res.send(data);
-//   });
-// };
-
-
-// exports.login = (req, res) => {
-//   console.log(req.body)
-//   Users.login(req, (err, data) => {
-//     if (err)
-//       res.send({ message: "User not_found" })
-//     else res.send({ message: JSON.stringify(data) });
-//   });
-// };
-// exports.userall = (req, res) => {
-
-//   Users.getAll((err, data) => {
-//     if (err)
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while retrieving tutorials."
-//       });
-//     else res.send(data);
-//   });
-// };
-
-// exports.update = (req, res) => {
-//   // Validate Request
-//   if (!req.body) {
-//     res.status(400).send({
-//       message: "Content can not be empty!"
-//     });
-//   }
-
-//   console.log(req.body);
-
-//   Users.updateById(
-//     req.params.id,
-//     new Users(req.body),
-//     (err, data) => {
-//       if (err) {
-//         if (err.kind === "not_found") {
-//           res.status(404).send({
-//             message: `Not found Users with id ${req.params.id}.`
-//           });
-//         } else {
-//           res.status(500).send({
-//             message: "Error updating Users with id " + req.params.id
-//           });
-//         }
-//       } else res.send(data);
-//     }
-//   );
-// };
-
-// exports.delete = (req, res) => {
-//   Users.remove(req.params.id, (err, data) => {
-//     if (err) {
-//       if (err.kind === "not_found") {
-//         res.status(404).send({
-//           message: `Not found Users with id ${req.params.id}.`
-//         });
-//       } else {
-//         res.status(500).send({
-//           message: "Could not delete Users with id " + req.params.id
-//         });
-//       }
-//     } else res.send({ message: `Users was deleted successfully!` });
-//   });
-// };
-
-//---------------------------------------------------
-// const User = db.users;
 
 // // Create and Save a new Tutorial
 // exports.create = (req, res) => {
 //   // Validate request
-//   if (!req.body.title) {
+//   if (!req.body.personnel_username) {
 //     res.status(400).send({
 //       message: "Content can not be empty!"
 //     });
 //     return;
 //   }
 
-//   // Create a Tutorial
-//   const user = new User({
-//     // title: req.body.title,
-//     // description: req.body.description,
-//     // published: req.body.published ? req.body.published : false
+//   // Create a User
+//   const user = {
 //     personnel_username: req.body.personnel_username,
 //     personnel_email: req.body.personnel_email,
 //     personnel_password: req.body.personnel_password,
@@ -152,11 +41,13 @@ exports.allAccess = (req, res) => {
 //     personnel_lname: req.body.personnel_lname,
 //     personnel_caedID: req.body.personnel_caedID,
 //     personnel_phone: req.body.personnel_phone,
-//     personnel_img: req.body.personnel_img,
-//     personnel_role: req.body.personnel_role || false
-//   });
+//     personnel_role: req.body.personnel_role,
+//     personnel_img: fs.readFileSync(
+//       __basedir + "/resources/static/assets/uploads/" + req.file.filename
+//     )
+//   };
 
-//   // Save Tutorial in the database
+//   // Save User in the database
 //   User.create(user)
 //     .then(data => {
 //       res.send(data);
@@ -169,148 +60,38 @@ exports.allAccess = (req, res) => {
 //     });
 // };
 
-// // Retrieve all Tutorials from the database.
-// exports.findAll = (req, res) => {
-
-//   User.getAll((err, data) => {
-//     if (err)
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while retrieving Users."
-//       });
-//     else res.send(data);
-//   });
-// };
-
-
-// // Find a single Tutorial with an id
-// exports.findOne = (req, res) => {
-//   User.findById(req.params.id, (err, data) => {
-//     if (err) {
-//       if (err.kind === "not_found") {
-//         res.status(404).send({
-//           message: `Not found Product with id ${req.params.id}.`
-//         });
-//       } else {
-//         res.status(500).send({
-//           message: "Error retrieving User with id " + req.params.id
-//         });
-//       }
-//     } else res.send(data);
-//   });
-// };
-
-// // Update a Tutorial by the id in the request
-// exports.update = (req, res) => {
-//   const id = req.params.id;
-
-//   User.update(req.body, {
-//     where: { id: id }
-//   })
-//     .then(num => {
-//       if (num == 1) {
-//         res.send({
-//           message: "User was updated successfully."
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
-//         });
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message: "Error updating User with id=" + id
-//       });
-//     });
-// };
-
-// // Delete a Tutorial with the specified id in the request
-// exports.delete = (req, res) => {
-//   const id = req.params.id;
-
-//   User.destroy({
-//     where: { id: id }
-//   })
-//     .then(num => {
-//       if (num == 1) {
-//         res.send({
-//           message: "User was deleted successfully!"
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot delete User with id=${id}. Maybe User was not found!`
-//         });
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message: "Could not delete User with id=" + id
-//       });
-//     });
-// };
-
-// // Delete all Tutorials from the database.
-// exports.deleteAll = (req, res) => {
-//   User.destroy({
-//     where: {},
-//     truncate: false
-//   })
-//     .then(nums => {
-//       res.send({ message: `${nums} Users were deleted successfully!` });
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while removing all users."
-//       });
-//     });
-// };
-
-// // Find all published Tutorials
-// // exports.findAllPublished = (req, res) => {
-  
-// // };
-
-//---------------------------------------------
-
-// Create and Save a new Tutorial
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.personnel_username) {
-    res.status(400).send({
-      message: "Content can not be empty!"
+  try {
+    console.log(req.file);
+
+    if (req.file == undefined) {
+      return res.send(`You must select a file.`);
+    }
+
+    User.create({
+      personnel_username: req.body.personnel_username,
+      personnel_email: req.body.personnel_email,
+      personnel_password: req.body.personnel_password,
+      personnel_fname: req.body.personnel_fname,
+      personnel_lname: req.body.personnel_lname,
+      personnel_caedID: req.body.personnel_caedID,
+      personnel_phone: req.body.personnel_phone,
+      personnel_role: req.body.personnel_role,
+      personnel_img: fs.readFileSync(
+        __basedir + "/backend/uploads/" + req.file.filename
+      ),
+    }).then((image) => {
+      fs.writeFileSync(
+        __basedir + "/backend/uploads/" + image.username,
+        image.personnel_img
+      );
+
+      return res.send(`File has been uploaded.`);
     });
-    return;
+  } catch (error) {
+    console.log(error);
+    return res.send(`Error when trying upload images: ${error}`);
   }
-
-  // Create a Tutorial
-  const user = {
-    // title: req.body.title,
-    // description: req.body.description,
-    // published: req.body.published ? req.body.published : false
-    personnel_username: req.body.personnel_username,
-    personnel_email: req.body.personnel_email,
-    personnel_password: req.body.personnel_password,
-    personnel_fname: req.body.personnel_fname,
-    personnel_lname: req.body.personnel_lname,
-    personnel_caedID: req.body.personnel_caedID,
-    personnel_phone: req.body.personnel_phone,
-    personnel_img: req.body.personnel_img,
-    personnel_role: req.body.personnel_role
-  };
-
-  // Save Tutorial in the database
-  User.create(user)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial."
-      });
-    });
 };
 
 // Retrieve all Tutorials from the database.
@@ -420,7 +201,89 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// // Find all published Tutorials
-// exports.findAllPublished = (req, res) => {
-  
+// exports.uploadFiles = (req, res) => {
+//   try {
+//     console.log(req.file);
+
+//     if (req.file == undefined) {
+//       return res.send(`You must select a file.`);
+//     }
+
+//     User.create({
+//       type: req.file.mimetype,
+//       name: req.file.originalname,
+//       data: fs.readFileSync(
+//         __basedir + "/resources/static/assets/uploads/" + req.file.filename
+//       ),
+//     }).then((image) => {
+//       fs.writeFileSync(
+//         __basedir + "/resources/static/assets/tmp/" + image.name,
+//         image.data
+//       );
+
+//       return res.send(`File has been uploaded.`);
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.send(`Error when trying upload images: ${error}`);
+//   }
 // };
+
+//----------------------------
+
+const uploadFile = require("../middleware/upload");
+
+exports.uploadFiles = async (req, res) => {
+  try {
+    await uploadFile(req, res);
+
+    if (req.file == undefined) {
+      return res.status(400).send({ message: "Please upload a file!" });
+    }
+
+    res.status(200).send({
+      message: "Uploaded the file successfully: " + req.file.originalname,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: `Could not upload the file: ${req.file.originalname}. ${err}`,
+    });
+  }
+};
+
+exports.getListFiles = (req, res) => {
+  const directoryPath = __basedir + ".../uploads/";
+
+  fs.readdir(directoryPath, function (err, files) {
+    if (err) {
+      res.status(500).send({
+        message: "Unable to scan files!",
+      });
+    }
+
+    let fileInfos = [];
+
+    files.forEach((file) => {
+      fileInfos.push({
+        name: file,
+        url: baseUrl + file,
+      });
+    });
+
+    res.status(200).send(fileInfos);
+  });
+};
+
+exports.download = (req, res) => {
+  const fileName = req.params.name;
+  const directoryPath = __basedir + ".../uploads/";
+
+  res.download(directoryPath + fileName, fileName, (err) => {
+    if (err) {
+      res.status(500).send({
+        message: "Could not download the file. " + err,
+      });
+    }
+  });
+};
+

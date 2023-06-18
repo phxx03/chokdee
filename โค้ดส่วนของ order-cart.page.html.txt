@@ -1,0 +1,524 @@
+โค้ดส่วนของ order-cart.page.html
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button size="small" (click)="goBack()" icon-start>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Shopping Cart
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card>
+  <ion-list *ngIf="cartItems.length > 0; else emptyCart">
+    <ion-item *ngFor="let item of cartItems">
+      <ion-thumbnail slot="start">
+        <img src="{{item.product_img}}" alt="Product Image">
+      </ion-thumbnail>
+      <ion-label class="ion-text-wrap">
+        <h2>{{ item.product_name }}</h2>
+        <p>Price: {{ item.product_price | currency }}</p>
+        <ion-badge color="secondary">{{ item.product_cartselect }}</ion-badge>
+      </ion-label>
+      <ion-button fill="outline" size="small" (click)="decreaseQuantity(item)">
+        <ion-icon slot="icon-only" name="remove"></ion-icon>
+      </ion-button>
+      <ion-button fill="outline" size="small" (click)="increaseQuantity(item)">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+      <ion-button fill="outline" size="small" (click)="removeFromCart(item)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #emptyCart>
+    <ion-item>
+      <ion-label>Cart is Empty</ion-label>
+    </ion-item>
+  </ng-template>
+
+  <ion-item *ngIf="cartItems.length > 0">
+    <ion-label>Total:</ion-label>
+    <ion-badge slot="end">{{ getTotal() | currency }}</ion-badge>
+  </ion-item>
+
+  <ion-button expand="full" (click)="goToDeliveryForm()">Proceed to Checkout</ion-button>
+</ion-card>
+
+โค้ดส่วนของ order-cart.page.ts
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+
+@Component({
+  selector: 'app-order-cart',
+  templateUrl: './order-cart.page.html',
+  styleUrls: ['./order-cart.page.scss'],
+})
+export class OrderCartPage implements OnInit {
+  cartItems: any;
+
+  constructor(private router: Router,private navCtrl: NavController) {}
+
+  ngOnInit(): void {
+    let data = window.sessionStorage.getItem("cartItem") || "[]"
+    console.log("data",JSON.parse(data))
+    this.cartItems = JSON.parse(data)
+    this.cartItems = this.cartItems.map((c: any) => ({...c,product_cartselect:1}))
+    console.log(this.cartItems)
+  }
+
+  removeFromCart(item: any) {
+    const index = this.cartItems.indexOf(item);
+    if (index > -1) {
+      this.cartItems.splice(index, 1);
+    }
+  }
+
+  getTotal(): number {
+    let total = 0;
+    for (const item of this.cartItems) {
+      total += item.product_price * item.product_cartselect;
+    }
+    return total;
+  }
+
+  goToDeliveryForm(): void {
+    window.sessionStorage.setItem("cartItemALL",JSON.stringify(this.cartItems))
+    window.sessionStorage.setItem("cartItem",JSON.stringify(this.cartItems))
+    this.router.navigate(['/order-chackout']); // Navigate to the order-chackout page
+
+  }
+  
+  goBack() {
+    this.navCtrl.back();
+  }
+
+  decreaseQuantity(item: any) {
+    if (item.product_cartselect > 1) {
+      item.product_cartselect--;
+    }
+  }
+
+  increaseQuantity(item: any) {
+    if (item.product_quantity > item.product_cartselect){
+    item.product_cartselect++;}
+  }
+}
+โค้ดส่วนของ order-chackout.page.html
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button size="small" (click)="goBack()" icon-start>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Delivery Details
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card>
+  <ion-list>
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input [(ngModel)]="deliveryDetails.order_Customer" name="order_Customer" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Contact Number</ion-label>
+      <ion-input [(ngModel)]="deliveryDetails.order_Customer_Contact" name="order_Customer_Contact" type="tel"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Delivery Method</ion-label>
+      <ion-segment [(ngModel)]="deliveryMethod">
+        <ion-segment-button value="pickup">
+          <ion-label>Pickup</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="delivery">
+          <ion-label>Delivery</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+
+    <ion-item *ngIf="isDeliveryMethodSelected('delivery')">
+      <ion-label>Delivery Address</ion-label>
+      <ion-textarea [(ngModel)]="deliveryDetails.order_Customer_Addrass" name="order_Customer_Addrass" rows="4"></ion-textarea>
+    </ion-item>
+    <!-- Add more form fields as needed -->
+  </ion-list>
+
+  <ion-item>
+    <ion-label>Payment Method</ion-label>
+    <ion-radio-group [(ngModel)]="paymentMethod" name="paymentMethod">
+      <ion-item>
+        <ion-label>Cash</ion-label>
+        <ion-radio slot="start" value="cash"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Transfer</ion-label>
+        <ion-radio slot="start" value="transfer"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-item>
+
+  <ion-button expand="full" (click)="placeOrder()">Place Order</ion-button>
+</ion-card>
+
+โค้ดส่วนของ order-chackout.page.ts
+import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { OrderService } from '../_services/order.service';
+import { Order } from '../models/order.model';
+import { flatMap } from 'rxjs';
+
+@Component({
+  selector: 'app-order-chackout',
+  templateUrl: './order-chackout.page.html',
+  styleUrls: ['./order-chackout.page.scss'],
+})
+export class OrderChackoutPage implements OnInit {
+
+  cartItems: any[] = []; // Declare the cartItems property
+  deliveryDetails: any = {}; // Declare the deliveryDetails property
+  deliveryMethod: string = 'pickup'; // Declare and initialize the deliveryMethod property
+  paymentMethod: string = 'cash'; // Declare and initialize the paymentMethod property
+
+  order: Order = {
+    order_Product_ID: '',
+    order_Product_Qyantity: 100,
+    order_Customer: '',
+    order_Customer_Contact: '',
+    order_Customer_Addrass: '',
+    order_Type_Delivery: false,
+    order_Type_Pay: false,
+    order_Product_total_Price: 100,
+    order_User_ID: '',
+    order_Date: new Date()
+  };
+
+  constructor(private orderService: OrderService,
+    private router: Router,
+    private navCtrl: NavController) {}
+
+  ngOnInit(): void {
+    // Initialize cartItems array with data
+    this.cartItems = [
+      // Your cart items data here
+    ];
+  }
+
+  removeFromCart(item: any): void {
+    // Remove item from cartItems array
+    const index = this.cartItems.indexOf(item);
+    if (index > -1) {
+      this.cartItems.splice(index, 1);
+    }
+  }
+
+  getTotal(): number {
+    // Calculate total price of items in cart
+    let total = 0;
+    for (const item of this.cartItems) {
+      total += item.product_price * item.product_quantity;
+    }
+    return total;
+  }
+
+
+  placeOrder(): void {
+    // Get the delivery details, delivery method, and payment method
+    const deliveryDetails = this.deliveryDetails;
+    const deliveryMethod = this.deliveryMethod;
+    const paymentMethod = this.paymentMethod;
+
+    // Combine the delivery details, cart items, and other order information
+    const orderData = {
+      deliveryDetails,
+      // cartItems: this.cartItems,
+      deliveryMethod,
+      paymentMethod
+    };
+
+    // Perform the order placement logic here
+    console.log('Place order:', orderData);
+    window.sessionStorage.setItem("orderData",JSON.stringify(orderData))
+    this.router.navigate(['/order-chackout2']);
+    
+  }
+
+  isDeliveryMethodSelected(method: string): boolean {
+    return this.deliveryMethod === method;
+  }
+  
+  goBack() {
+    this.navCtrl.back();
+  }
+}
+
+โค้ดส่วนของ order-chackout2.page.html
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button size="small" (click)="goBack()" icon-start>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Checkout Summary
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Delivery Details</ion-card-subtitle>
+    <ion-card-title>{{ deliveryDetails.order_Customer }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <p><strong>Address:</strong> {{ deliveryDetails.order_Customer_Addrass }}</p>
+    <p><strong>Contact Number:</strong> {{ deliveryDetails.order_Customer_Contact }}</p>
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Order Summary</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-list>
+    <ion-item *ngFor="let item of cartItems">
+      <ion-label>{{ item.product_name }}</ion-label>
+      <ion-label slot="end">{{ item.product_price | currency }}</ion-label>
+      <ion-label slot="end">Quantity: {{ item.product_cartselect }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-card>
+
+<div class="total">
+  <p><strong>Total Price:</strong> {{ totalPrice | currency }}</p>
+</div>
+
+<ion-button expand="full" (click)="placeOrder()">Place Order</ion-button>
+
+โค้ดส่วนของ order-chackout2.page.ts
+import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { OrderService } from '../_services/order.service';
+import { Order } from '../models/order.model';
+
+@Component({
+  selector: 'app-order-chackout2',
+  templateUrl: './order-chackout2.page.html',
+  styleUrls: ['./order-chackout2.page.scss'],
+})
+export class OrderChackout2Page implements OnInit {
+  deliveryDetails: any;
+  cartItems: any[] = [];
+  totalPrice: number = 0;
+
+  order: Order = {
+    order_Product_ID: '',
+    order_Product_Qyantity: 100,
+    order_Customer: '',
+    order_Customer_Contact: '',
+    order_Customer_Addrass: '',
+    order_Type_Delivery: false,
+    order_Type_Pay: false,
+    order_Product_total_Price: 100,
+    order_User_ID: '',
+    order_Date: new Date()
+  };
+
+  submitted = false;
+
+  constructor(private orderService: OrderService, private navCtrl: NavController) {
+    // Initialize the data (replace with your own data)
+    this.deliveryDetails = {
+      order_Customer: "",
+      order_Customer_Addrass: "",
+      order_Customer_Contact: "",
+    };
+  }
+
+  ngOnInit() {
+    let data = window.sessionStorage.getItem("cartItemALL") || "[]";
+    let data2 = window.sessionStorage.getItem("orderData") || "{}";
+    this.cartItems = JSON.parse(data);
+    this.totalPrice = this.calculateTotalPrice();
+    let orderdata = JSON.parse(data2);
+    console.log(orderdata.deliveryDetails);
+    this.deliveryDetails = orderdata.deliveryDetails;
+  }
+
+  calculateTotalPrice(): number {
+    let total = 0;
+    for (const item of this.cartItems) {
+      console.log(item.product_price, item.product_cartselect);
+      total += item.product_price * item.product_cartselect;
+    }
+    return total;
+  }
+
+  placeOrder(): void {
+    const order: Order = {
+      order_Product_ID: this.order.order_Product_ID,
+      order_Product_Qyantity: this.order.order_Product_Qyantity,
+      order_Customer: this.order.order_Customer,
+      order_Customer_Contact: this.order.order_Customer_Contact,
+      order_Customer_Addrass: this.order.order_Customer_Addrass,
+      order_Type_Delivery: this.order.order_Type_Delivery,
+      order_Type_Pay: this.order.order_Type_Pay,
+      order_Product_total_Price: this.order.order_Product_total_Price,
+      order_User_ID: this.order.order_User_ID,
+      order_Date: this.order.order_Date
+    };
+  
+    this.orderService.createOrder(order).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.submitted = true;
+      },
+      error: (e) => console.error(e)
+    });
+  }
+  
+
+  newOrder(): void {
+    this.submitted = false;
+    this.order = {
+      order_Product_ID: '',
+      order_Product_Qyantity: 100,
+      order_Customer: '',
+      order_Customer_Contact: '',
+      order_Customer_Addrass: '',
+      order_Type_Delivery: false,
+      order_Type_Pay: false,
+      order_Product_total_Price: 100,
+      order_User_ID: '',
+      order_Date: new Date()
+    };
+  }
+  
+  goBack() {
+    this.navCtrl.back();
+  }
+}
+
+
+
+HttpErrorResponse {headers: HttpHeaders, status: 500, statusText: 'Internal Server Error', url: 'http://localhost:8080/api/orders', ok: false, …}
+error
+: 
+{message: "ER_PARSE_ERROR: You have an error in your SQL synt…er_Customer` = 'piyada phomkajon', ...' at line 1"}
+headers
+: 
+HttpHeaders
+lazyInit
+: 
+() => {…}
+lazyUpdate
+: 
+null
+normalizedNames
+: 
+Map(0) {size: 0}
+[[Prototype]]
+: 
+Object
+message
+: 
+"Http failure response for http://localhost:8080/api/orders: 500 Internal Server Error"
+name
+: 
+"HttpErrorResponse"
+ok
+: 
+false
+status
+: 
+500
+statusText
+: 
+"Internal Server Error"
+url
+: 
+"http://localhost:8080/api/orders"
+[[Prototype]]
+: 
+HttpResponseBase
+
+"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '13, 14, `order_Product_Qyantity` = 3, `order_Customer` = 'piyada phomkajon', ...' at line 1"
+
+
+UPDATE inv
+SET inv.quantity = inv.quantity - ord.quantity
+FROM tblInventory inv
+INNER JOIN tblOrders ord
+ON inv.id = ord.id AND inv.weight = ord.weight
+
+product_name: req.body.product_name,
+    product_brand: req.body.product_brand,
+    product_description: req.body.product_description,
+    product_price: req.body.product_price,
+    product_img: req.body.product_img,
+    product_quantity: req.body.product_quantity,
+    product_other_detail: req.body.product_other_detail,
+    product_published: req.body.product_published || false
+
+
+      product.product_name,
+      product.product_brand,
+      product.product_description,
+      product.product_price,
+      product.product_img,
+      product.product_quantity,
+      product.product_other_detail,
+      product.product_published,
+      id
+
+  this.product_name = product.product_name;
+  this.product_brand = product.product_brand;
+  this.product_description = product.product_description;
+  this.product_price = product.product_price;
+  this.product_img = product.product_img;
+  this.product_quantity = product.product_quantity;
+  this.product_other_detail = product.product_other_detail;
+  this.product_published = product.product_published;
+
+
+ตารางฐานข้อมูล products
+`id``product_name``product_price``product_brand``product_description``product_img``product_quantity``product_other_detail``product_published`
+
+ตารางฐานข้อมูล orders
+`id``order_Customer``order_Customer_Address``order_Customer_Contact``order_Product_ID``order_Product_Total_Price``order_Product_Quantity``order_Type_Delivery``order_Type_Pay``order_User_ID``order_Date`
+
+
+
+sql.query(
+    "UPDATE orders SET order_id = ?, order_Delivery_Status = ?, order_Product_ID = ?, order_Product_Quantity = ?, order_Customer = ?, order_Customer_Contact = ?, order_Customer_Address = ?, order_Type_Delivery = ?, order_Type_Pay = ?, order_Product_total_Price = ?, order_User_ID = ?, order_Date = ? WHERE id = ?",
+    [
+      order.order_id,
+      order.order_Product_ID,
+      order.order_Product_Quantity,
+      order.order_Customer,
+      order.order_Customer_Contact,
+      order.order_Customer_Address,
+      order.order_Type_Delivery,
+      order.order_Type_Pay,
+      order.order_Product_total_Price,
+      order.order_User_ID,
+      order.order_Date,
+      order.order_Delivery_Status,
+      id
+    ],
+
+
+
+ต้องการให้เมื่อกดยืนยันการจัดส่งแล้ว สถานะของ order_Delivery_Status ใน mysql เปลี่ยน

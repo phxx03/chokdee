@@ -16,6 +16,8 @@ import { RegisterPage } from './register/register.page';
 import { HomePage } from './home/home.page';
 import { ProfilePage } from './profile/profile.page';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
+import { ProfilePageModule } from './profile/profile.module'; // นำเข้าโมดูลหลักของหน้า ProfilePageModule
+
 
 @NgModule({
   declarations: [AppComponent,TutorialDetailsPage,
@@ -25,7 +27,8 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
     IonicModule.forRoot(), 
     AppRoutingModule,
     HttpClientModule,
-    FormsModule],
+    FormsModule, 
+    ProfilePageModule],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },authInterceptorProviders],
   bootstrap: [AppComponent],

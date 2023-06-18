@@ -12,7 +12,8 @@ export class HomePage {
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
-  username?: string;
+  showUser = false;
+  username? = false;
 
   constructor(private userService: UserService,private tokenStorageService: TokenStorageService) { }
 
@@ -25,6 +26,8 @@ export class HomePage {
 
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+      
+      this.showUser = this.roles.includes('ROLE_USER');
 
       this.username = user.username;
     }

@@ -1,0 +1,1 @@
+UPDATE products set product_quantity = product_quantity-1 WHERE id = '14';

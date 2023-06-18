@@ -6,6 +6,7 @@ const Product = function(product) {
   this.product_name = product.product_name;
   this.product_brand = product.product_brand;
   this.product_description = product.product_description;
+  this.product_price = product.product_price;
   this.product_img = product.product_img;
   this.product_quantity = product.product_quantity;
   this.product_other_detail = product.product_other_detail;
@@ -78,15 +79,18 @@ Product.getAllPublished = result => {
 
 Product.updateById = (id, product, result) => {
   sql.query(
-    "UPDATE products SET product_name = ?, product_brand = ?, product_description = ?, product_img = ?, product_quantity = ?, product_other_detail = ?, product_published = ? WHERE id = ?",
-    [product.product_name,
+    "UPDATE products SET product_name = ?, product_brand = ?, product_description = ?, product_price = ?, product_img = ?, product_quantity = ?, product_other_detail = ?, product_published = ? WHERE id = ?",
+    [      
+      product.product_name,
       product.product_brand,
       product.product_description,
+      product.product_price,
       product.product_img,
       product.product_quantity,
       product.product_other_detail,
       product.product_published,
-      id],
+      id
+    ],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

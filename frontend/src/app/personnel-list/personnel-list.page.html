@@ -1,42 +1,33 @@
 <ion-header class="header" mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+      <ion-button size="small" (click)="goBack()" icon-start>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title class="ion-padding-center">Personnel List </ion-title>
+    <ion-title class="ion-padding-center">รายชื่อพนักงาน</ion-title>
   </ion-toolbar>
 </ion-header>
 
+  <ion-toolbar>
+    <ion-searchbar mode="ios" placeholder="ค้นหาสินค้า" [(ngModel)]="searchText" (ionChange)="searchProduct_name()"></ion-searchbar>
+  </ion-toolbar>
+<ion-card>
 
-  <!-- <ion-searchbar mode="ios" placeholder="ชื่อสินค้า" [(ngModel)]="product_name" ></ion-searchbar> -->
-  <ion-card>
-    <ion-list
-        *ngFor="let user of users; let i = index"
-        [class.active]="i == currentIndex"
-        (click)="goToDetailPage(user.id)"
-      >
-        <ion-item>
-          <ion-thumbnail slot="start">
-          <img src= "{{ user.personnel_img }}" />
-          </ion-thumbnail>
-          <ion-label>
-            <h2>{{ user.personnel_username }}</h2>
-            <small>{{ user.personnel_email }}</small>
-          </ion-label>
-          
-          <!-- <a [class.active]="i == currentIndex">
-            {{ personnel.personnel_quantity }}
-          </a> -->
-      </ion-item>
-    </ion-list>
-    <!-- <button (click)="removeAllProducts()">
-      Remove All
-    </button> -->
-    <ion-infinite-scroll>
-      <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ion-card>
-    
-      
+  <ion-list>
+    <ion-item *ngFor="let user of filteredUsers">
+      <ion-avatar slot="start">
+        <img [src]="getSafeImageURL(user.personnel_img)" alt="User Image" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ user.personnel_username }}</h2>
+        <p>{{ user.personnel_email }}</p>
+      </ion-label>
+      <ion-button (click)="goToDetailPage(user.id)">Details</ion-button>
+    </ion-item>    
+  </ion-list>
 
-    
+  <ion-infinite-scroll>
+    <ion-infinite-scroll-content loadingText="กรุณารอสักครู่..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-card>

@@ -1,0 +1,36 @@
+id	(PK)
+order_Product_ID		(FK)
+order_Product_Qyantity			int
+order_Customer					string
+order_Customer_Contact			string
+order_Customer_Addrass			string
+order_Type_Delivery			boolean ==> tinyint
+order_Type_Pay					boolean ==> tinyint
+order_Product_total_Price		int
+order_Date						datetime
+order_User_ID	(FK)
+
+
+id คือ ไอดีที่สร้างขึ้นอัตโนมัติ
+    order_id คือ กลุ่มของไอดี แต่ละ ออเด้อ โดยแยกเป็น1ไอดีต่อ1ไอดีของสินค้า ใน1ออเด้อสามารถมีออเด้อไอดีซำกันได้ขึ้นอยู่กับสินค้าที่เราเลือกว่ากี่โปรดักไอดี
+    order_Product_ID คือไอดีของสินค้าที่เลือก
+    order_Product_Quantity คือจำนวนของสินค้าที่เลือกในหนึ่งโปรดัคไอดี
+    order_Customer คือชื่อลูกค้า
+    order_Customer_Contact คือเบอร์โทรลูกค้า
+    order_Customer_Address คือที่อยู่ลูกค้า
+    order_Type_Delivery คือประเภทการจัดส่งว่าเป็นรับเองหรือจัดส่งให้ตามที่อยู่
+    order_Type_Pay คือประเภทการจ่ายเงิน ว่าเป็นจ่ายสดหรือโอนจ่าย
+    order_Product_total_Price คือราคารวมของสินค้านั้นๆตามไอดี 
+    order_Delivery_Status คือสถานะการจัดส่งว่าส่งแล้วหรือไม่
+    order_User_ID คือไอดีของพนักงานที่ทำการสั่งซื้อ
+    order_Date คือวันเวลาที่ทำการสั่งซื้อ
+
+ขอขยายความของ order_id กับ order_Product_ID คือ 1 order_id จะมี 1 order_Product_ID ใน 1 การสั่งซื้อ order_id จะซ้ำกันได้ เช่น 
+รายการสั่งซื้อที่ 1 สั่งซื้อสินค้า3ชิ้น 
+id 1  order_id 1  order_Product_ID 1 order_Product_Quantity 2 order_Product_total_Price 500
+id 2 order_id 1 order_Product_ID 2 order_Product_Quantity 1 order_Product_total_Price 100
+id 3 order_id 1 order_Product_ID 3 order_Product_Quantity 1 order_Product_total_Price 250
+
+รายการสั่งซื้อที่ 2 สั่งซื้อสินค้า2ชิ้น 
+id 4  order_id 2  order_Product_ID 1 order_Product_Quantity 2 order_Product_total_Price 500
+id 5 order_id 2 order_Product_ID 2 order_Product_Quantity 1 order_Product_total_Price 100

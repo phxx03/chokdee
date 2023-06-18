@@ -1,9 +1,46 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Order</ion-title>
+    <ion-buttons slot="start">
+      <ion-button size="small" (click)="goBack()" icon-start>
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>เลือกสินค้า</ion-title>
+    <ion-button slot="end" (click)="goToCart()">
+      <ion-icon name="cart"></ion-icon>
+      <ion-badge *ngIf="cartItemCount > 0" color="primary">{{ cartItemCount }}</ion-badge>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-card>
+  <ion-searchbar mode="ios" placeholder="ค้นหาสินค้า" [(ngModel)]="searchText"></ion-searchbar>
 
-</ion-content>
+  <ion-segment [(ngModel)]="sortOrder">
+    <ion-segment-button value="name" (click)="sortQuantity('asc')">
+      จำนวนน้อยไปมาก
+    </ion-segment-button>
+    <ion-segment-button value="quantity" (click)="sortQuantity('desc')">
+      จำนวนมากไปน้อย
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-list *ngFor="let product of filteredProducts; let i = index" [class.active]="i == currentIndex">
+    <ion-item size="6">
+      <ion-thumbnail slot="start">
+        <img [src]="getSafeImageURL(product.product_img)" alt="Product Image">
+      </ion-thumbnail>
+      <ion-label class="ion-text-wrap">
+        <h2>{{ product.product_name }}</h2>
+        <p>{{ product.product_brand }}</p>
+        <p>quantity: {{ product.product_quantity }}</p>
+        <p>ราคา: {{ product.product_price | currency }}</p>
+      </ion-label>
+      <ion-button expand="full" (click)="addToCart(product)">เพิ่มลงตะกร้า</ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingText="กำลังโหลดข้อมูลเพิ่มเติม..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-card>
+

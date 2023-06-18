@@ -1,7 +1,10 @@
 module.exports = app => {
   const { authJwt } = require("../middleware");
   const users = require("../controllers/user.controller.js");
+  const multer = require('multer');
+  const upload = multer({ dest: 'uploads/' });  
   var router = require("express").Router();
+
 
   app.use(function(req, res, next) {
     res.header(
@@ -34,7 +37,7 @@ module.exports = app => {
   //------------------
 
   // Create a new Tutorial
-  router.post("/", users.create);
+  // router.post("/", users.create);
 
   // Retrieve all Tutorials
   router.get("/", users.findAll);
@@ -54,54 +57,11 @@ module.exports = app => {
   // Delete all Tutorials
   router.delete("/", users.deleteAll);
 
+  router.post("/upload", upload.single("file"), users.create);
+
+  router.post("/uploadFiles", users.uploadFiles);
+  router.get("/files", users.getListFiles);
+  router.get("/files/:name", users.download);
+
   app.use('/api/users', router);
 };
-
-//---------------------------------------------
-
-// module.exports = app => {
-//   const users = require("../controllers/user.controller.js");
-
-//   var router = require("express").Router();
-
-//   // Create a new Tutorial
-//   router.post("/create", users.create);
-//   router.post("/update/:id", users.update);
-//   router.get("/delete/:id", users.delete);
-//   router.post("/login", users.login);
-//   router.get("/user", users.userall);
-
-
-//   app.use('/api/users', router);
-
-// };
-
-//------------------------------------------------
-// module.exports = app => {
-//   const users = require("../controllers/user.controller.js");
-
-//   var router = require("express").Router();
-
-//   // Create a new Tutorial
-//   router.post("/", users.create);
-
-//   // Retrieve all Tutorials
-//   router.get("/", users.findAll);
-
-//   // Retrieve all published Tutorials
-//   router.get("/published", users.findAllPublished);
-
-//   // Retrieve a single Tutorial with id
-//   router.get("/:id", users.findOne);
-
-//   // Update a Tutorial with id
-//   router.put("/:id", users.update);
-
-//   // Delete a Tutorial with id
-//   router.delete("/:id", users.delete);
-
-//   // Delete all Tutorials
-//   router.delete("/", users.deleteAll);
-
-//   app.use('/api/tutorials', router);
-// };
