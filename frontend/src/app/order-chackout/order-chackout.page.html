@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      Delivery Details
+      รายละเอียดการจัดส่ง
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,45 +14,46 @@
 <ion-card>
   <ion-list>
     <ion-item>
-      <ion-label>Name</ion-label>
+      <ion-label>ชื่อ</ion-label>
       <ion-input [(ngModel)]="deliveryDetails.order_Customer" name="order_Customer" type="text"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Contact Number</ion-label>
-      <ion-input [(ngModel)]="deliveryDetails.order_Customer_Contact" name="order_Customer_Contact" type="tel"></ion-input>
+      <ion-label>เบอร์โทรศัพท์</ion-label>
+      <ion-input [(ngModel)]="deliveryDetails.order_Customer_Contact" name="order_Customer_Contact" type="tel" required
+        minlength="10" maxlength="10"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Delivery Method</ion-label>
       <ion-segment [(ngModel)]="deliveryMethod">
         <ion-segment-button value="pickup">
-          <ion-label>Pickup</ion-label>
+          <ion-label>รับกลับ</ion-label>
         </ion-segment-button>
         <ion-segment-button value="delivery">
-          <ion-label>Delivery</ion-label>
+          <ion-label>จัดส่ง</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-item>
 
     <ion-item *ngIf="isDeliveryMethodSelected('delivery')">
-      <ion-label>Delivery Address</ion-label>
-      <ion-textarea [(ngModel)]="deliveryDetails.order_Customer_Address" name="order_Customer_Address" rows="4"></ion-textarea>
+      <ion-label>ที่อยู่</ion-label>
+      <ion-textarea [(ngModel)]="deliveryDetails.order_Customer_Address" name="order_Customer_Address"
+        rows="4"></ion-textarea>
     </ion-item>
     <!-- Add more form fields as needed -->
   </ion-list>
 
   <ion-item>
-    <ion-label>Payment Method</ion-label>
+    <ion-label>ช่องทางการชำระเงิน</ion-label>
     <ion-radio-group [(ngModel)]="paymentMethod" name="paymentMethod">
       <ion-item>
-        <ion-label>Cash</ion-label>
+        <ion-label>เงินสด</ion-label>
         <ion-radio slot="start" value="cash"></ion-radio>
       </ion-item>
       <ion-item>
-        <ion-label>Transfer</ion-label>
+        <ion-label>โอนจ่าย</ion-label>
         <ion-radio slot="start" value="transfer"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-item>
 
-  <ion-button expand="full" (click)="placeOrder()">Place Order</ion-button>
+  <ion-button expand="full" (click)="placeOrder()">สั่งซื้อสินค้า</ion-button>
 </ion-card>

@@ -9,46 +9,49 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-card>  
+<ion-card>
+  <ion-card class="profile-card">
+    <ion-item class="profile-image">
+      <div class="avatar-wrapper">
+        <img class="avatar" [src]="getSafeImageURL(currentUser.personnel_img)" alt="User Image" />
+      </div>
+    </ion-item>
+  </ion-card>
   <ion-item>
-    <ion-label><strong>Image:</strong></ion-label>
-    {{ currentUser.personnel_img }}
+    <ion-label><strong>ID:</strong></ion-label>
+    <ion-text>{{ currentUser.id }}</ion-text>
   </ion-item>
   <ion-item>
-    <ion-label><strong>card ID:</strong></ion-label>
-    {{ currentUser.personnel_caedID }}
+    <ion-label><strong>ชื่อ:</strong></ion-label>
+    <ion-text>{{ currentUser.personnel_fname }}</ion-text>
   </ion-item>
   <ion-item>
-    <ion-label><strong>First Name:</strong></ion-label>
-    {{ currentUser.personnel_fname }}
+    <ion-label><strong>นามสกุล:</strong></ion-label>
+    <ion-text>{{ currentUser.personnel_lname }}</ion-text>
   </ion-item>
   <ion-item>
-    <ion-label><strong>Last Name:</strong></ion-label>
-    {{ currentUser.personnel_lname }}
+    <ion-label><strong>เบอร์โทรศัพท์:</strong></ion-label>
+    <ion-text>{{ currentUser.personnel_phone }}</ion-text>
   </ion-item>
   <ion-item>
-    <ion-label><strong>Phone Number:</strong></ion-label>
-    {{ currentUser.personnel_phone }}
+    <ion-label><strong>เลขบัตรประชาชน:</strong></ion-label>
+    <ion-text>{{ currentUser.personnel_caedID }}</ion-text>
   </ion-item>
   <ion-item>
     <ion-label><strong>Email:</strong></ion-label>
-    {{ currentUser.personnel_email }}
+    <ion-text>{{ currentUser.personnel_email }}</ion-text>
   </ion-item>
   <ion-item>
     <ion-label><strong>User Name:</strong></ion-label>
-    {{ currentUser.personnel_username }}
+    <ion-text>{{ currentUser.personnel_username }}</ion-text>
   </ion-item>
-<!-- <ion-item>
-    <ion-label><strong>Status:</strong></ion-label>
-    {{ currentUser.product_published ? "จัดส่งแล้ว" : "รอการจัดส่ง..." }}
-  </ion-item> -->
-
+  
   <ion-button routerLink="/personnel-edit/{{ currentUser.id }}" expand="block" color="warning">
-    Edit
+    แก้ไข
   </ion-button>
-
-    <div *ngIf="!currentUser">
-      <br />
-      <p>Please click on a Product...</p>
-    </div>
 </ion-card>
+
+<div class="no-data" *ngIf="!currentUser">
+  <br />
+  <p>Please click on a Product...</p>
+</div>

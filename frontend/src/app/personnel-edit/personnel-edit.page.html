@@ -21,30 +21,30 @@
   </ion-item>
 
   <ion-item>
-    <ion-label for="personnel_fname" position="floating">First Name</ion-label>
+    <ion-label for="personnel_fname" position="floating">ชื่อ</ion-label>
     <ion-input placeholder="Enter text" id="personnel_fname" [(ngModel)]="currentUser.personnel_fname"
       name="personnel_fname">
     </ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating" for="personnel_lname">Last Name</ion-label>
+    <ion-label position="floating" for="personnel_lname">นามสกุล</ion-label>
     <ion-input placeholder="Enter text" id="personnel_lname" [(ngModel)]="currentUser.personnel_lname"
       name="personnel_lname">
     </ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating" for="personnel_caedID">card ID</ion-label>
+    <ion-label position="floating" for="personnel_caedID">เลขบัตรประชาชน</ion-label>
     <ion-input placeholder="Enter text" id="personnel_caedID" [(ngModel)]="currentUser.personnel_caedID"
-      name="personnel_caedID">
+      name="personnel_caedID" maxlength="13">
     </ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating" for="personnel_phone">Phone Number</ion-label>
+    <ion-label position="floating" for="personnel_phone">เบอรืโทรศัพท์</ion-label>
     <ion-input placeholder="Enter text" id="personnel_phone" [(ngModel)]="currentUser.personnel_phone"
-      name="personnel_phone">
+      name="personnel_phone" maxlength="10">
     </ion-input>
   </ion-item>
 

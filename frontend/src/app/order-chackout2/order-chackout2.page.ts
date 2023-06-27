@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { OrderService } from '../_services/order.service';
 import { Order } from '../models/order.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-chackout2',
@@ -33,7 +34,10 @@ export class OrderChackout2Page implements OnInit {
 
   submitted = false;
 
-  constructor(private orderService: OrderService, private navCtrl: NavController) {
+  constructor(
+    private orderService: OrderService, 
+    private navCtrl: NavController, 
+    private router: Router) {
     // กำหนดค่าเริ่มต้นให้กับข้อมูลการจัดส่ง (แก้ไขตามข้อมูลที่คุณต้องการ)
     this.deliveryDetails = {
       order_Customer: '',
@@ -131,12 +135,6 @@ export class OrderChackout2Page implements OnInit {
       error: (e) => console.error(e)
     });
   }
-  
-  
-  
-  
-  
-
 
   goBack() {
     this.navCtrl.back();

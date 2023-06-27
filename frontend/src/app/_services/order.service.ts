@@ -45,8 +45,8 @@ export class OrderService {
     return this.http.delete(baseUrl);
   }
 
-  findByOrder_Customer(order_Customer: any): Observable<Order[]> {
-    return this.http.get<Order[]>(`${baseUrl}?order_Customer=${order_Customer}`);
+  findByOrder_Customer(order_id: any): Observable<Order[]> {
+    return this.http.get<Order[]>(`${baseUrl}?order_id=${order_id}`);
   }
 
 }

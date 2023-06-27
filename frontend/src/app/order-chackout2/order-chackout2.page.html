@@ -6,39 +6,40 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      Checkout Summary
+      ยืนยันคำสั่งซื้อ
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle>Delivery Details</ion-card-subtitle>
+    <ion-card-subtitle>รายละเอียดการจัดส่ง</ion-card-subtitle>
     <ion-card-title>{{ deliveryDetails.order_Customer }}</ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
-    <p><strong>Address:</strong> {{ deliveryDetails.order_Customer_Address }}</p>
-    <p><strong>Contact Number:</strong> {{ deliveryDetails.order_Customer_Contact }}</p>
+    <p><strong>ที่อยู่:</strong> {{ deliveryDetails.order_Customer_Address }}</p>
+    <p><strong>เบอร์โทรศัพท์:</strong> {{ deliveryDetails.order_Customer_Contact }}</p>
   </ion-card-content>
 </ion-card>
 
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle>Order Summary</ion-card-subtitle>
+    <ion-card-subtitle>รายการ</ion-card-subtitle>
   </ion-card-header>
 
   <ion-list>
     <ion-item *ngFor="let item of cartItems">
       <ion-label>{{ item.product_name }}</ion-label>
-      <ion-label slot="end">{{ item.product_price | currency }}</ion-label>
-      <ion-label slot="end">Quantity: {{ item.product_cartselect }}</ion-label>
+      <ion-label slot="end">{{ item.product_price | currency}} บาท</ion-label>
+
+      <ion-label slot="end">{{ item.product_cartselect }} ชิ้น</ion-label>
     </ion-item>
   </ion-list>
 </ion-card>
 
 <div class="total">
-  <p><strong>Total Price:</strong> {{ totalPrice | currency }}</p>
+  <p><strong>ราคารวม:</strong> {{ totalPrice | currency }} บาท</p>
 </div>
 
-<ion-button expand="full" (click)="placeOrder()">Place Order</ion-button>
+<ion-button expand="full" (click)="placeOrder()" routerLink="/order">ยืนยันคำสั่งซื้อ</ion-button>

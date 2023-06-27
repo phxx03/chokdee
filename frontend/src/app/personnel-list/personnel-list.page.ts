@@ -16,10 +16,11 @@ export class PersonnelListPage implements OnInit {
   currentIndex = -1;
 
   searchQuery: string = '';
-  filteredUsers: user[] = [];
   personnelList: any[] = [];
   searchText: string = '';
-  defaultImage = 'assets/timered.png'; // เส้นทางไปยังรูปภาพตัวอย่าง
+  defaultImage = ''; // เส้นทางไปยังรูปภาพตัวอย่าง
+  
+  sortOrder: 'asc' | 'desc' = 'asc';
 
   constructor(
     private userService: UserService,
@@ -37,7 +38,6 @@ export class PersonnelListPage implements OnInit {
       next: (data) => {
         this.users = data;
         console.log(data);
-        this.filterUsers();
       },
       error: (e) => console.error(e),
     });
@@ -68,32 +68,7 @@ export class PersonnelListPage implements OnInit {
     });
   }
 
-  filterUsers() {
-    if (this.users) {
-      this.filteredUsers = this.users.filter(
-        (user) =>
-          (user.personnel_username &&
-            user.personnel_username
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase())) ||
-          (user.personnel_email &&
-            user.personnel_email
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase())) ||
-          (user.id &&
-            user.id
-              .toString()
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()))
-      );
-  
-      // Reset current user and index
-      this.currentUser = {};
-      this.currentIndex = -1;
-    }
-  }  
-
-  searchProduct_name(): void {
+  searchUser(): void {
     this.currentUser = {};
     this.currentIndex = -1;
 
@@ -103,6 +78,29 @@ export class PersonnelListPage implements OnInit {
       },
       error: (e) => console.error(e),
     });
+  }
+
+  get filteredUsers() {
+    const filtered = this.users?.filter((user) =>
+      user.personnel_username?.toLowerCase().includes(this.searchText?.toLowerCase())
+    );
+
+    const sorted = filtered?.sort((a, b) => {
+      if (this.sortOrder === 'asc' || this.sortOrder === 'desc') {
+        if (this.sortOrder === 'asc') {
+          if (typeof a.personnel_username === 'string' && typeof b.personnel_username === 'string') {
+            return a.personnel_username.localeCompare(b.personnel_username);
+          }
+        } else if (this.sortOrder === 'desc') {
+          if (typeof a.personnel_username === 'string' && typeof b.personnel_username === 'string') {
+            return b.personnel_username.localeCompare(a.personnel_username);
+          }
+        }
+      }
+      return 0;
+    });
+
+    return sorted;
   }
   
 

@@ -3,6 +3,7 @@ import { TutorialService } from 'src/app/_services/tutorial.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tutorial } from 'src/app/models/tutorial.model';
 import { NavController } from '@ionic/angular';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tutorial-details',
@@ -25,12 +26,14 @@ export class TutorialDetailsPage implements OnInit {
   };
   
   message = '';
+  defaultImage = ''; // เส้นทางไปยังรูปภาพตัวอย่าง
 
   constructor(
     private tutorialService: TutorialService,
     private route: ActivatedRoute,
     private router: Router,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private sanitizer: DomSanitizer
     ) { }
 
   ngOnInit(): void {
@@ -104,6 +107,13 @@ export class TutorialDetailsPage implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  getSafeImageURL(image: string | undefined): SafeUrl {
+    if (image) {
+      return this.sanitizer.bypassSecurityTrustUrl("http://localhost:8080/uploads/" + image);
+    }
+    return this.defaultImage;
   }
 
   goBack() {

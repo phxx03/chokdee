@@ -16,15 +16,6 @@
 <ion-card>
   <ion-searchbar mode="ios" placeholder="ค้นหาสินค้า" [(ngModel)]="searchText"></ion-searchbar>
 
-  <ion-segment [(ngModel)]="sortOrder">
-    <ion-segment-button value="name" (click)="sortQuantity('asc')">
-      จำนวนน้อยไปมาก
-    </ion-segment-button>
-    <ion-segment-button value="quantity" (click)="sortQuantity('desc')">
-      จำนวนมากไปน้อย
-    </ion-segment-button>
-  </ion-segment>
-
   <ion-list *ngFor="let product of filteredProducts; let i = index" [class.active]="i == currentIndex">
     <ion-item size="6">
       <ion-thumbnail slot="start">
@@ -39,8 +30,10 @@
       <ion-button expand="full" (click)="addToCart(product)">เพิ่มลงตะกร้า</ion-button>
     </ion-item>
   </ion-list>
+  <ion-item>
+  </ion-item>
   <ion-infinite-scroll (ionInfinite)="loadMore($event)">
-    <ion-infinite-scroll-content loadingText="กำลังโหลดข้อมูลเพิ่มเติม..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loadingText="กำลังโหลดข้อมูลเพิ่มเติม..."
+      loadingSpinner="bubbles"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-card>
-

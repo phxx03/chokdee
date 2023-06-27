@@ -1,4 +1,4 @@
-<ion-header  class="header" mode="ios">
+<ion-header class="header" mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button size="small" (click)="goBack()" icon-start>
@@ -10,32 +10,53 @@
 </ion-header>
 
 
-  <ion-card class="product-card">
-    <ion-item>
-      <ion-label><strong>ID:</strong></ion-label>
-      <ion-text>{{ currentProduct.id }}</ion-text>
-    </ion-item>
-    <ion-item>
-      <ion-label><strong>Title:</strong></ion-label>
-      <ion-text>{{ currentProduct.product_name }}</ion-text>
-    </ion-item>
-    <ion-item>
-      <ion-label><strong>Description:</strong></ion-label>
-      <ion-text>{{ currentProduct.product_description }}</ion-text>
-    </ion-item>
-    <ion-item>
-      <ion-label><strong>Status:</strong></ion-label>
-      <ion-text>{{ currentProduct.product_published ? "จัดส่งแล้ว" : "รอการจัดส่ง..." }}</ion-text>
-    </ion-item>
-
-    <ion-button routerLink="/product-edit/{{ currentProduct.id }}" expand="block" color="warning">
-      Edit
-    </ion-button>
-
-    <div *ngIf="!currentProduct" class="no-product">
-      <ion-text color="medium">
-        <p>Please click on a Product...</p>
-      </ion-text>
+<ion-card class="product-card">  
+  <ion-card class="profile-card">
+  <ion-item class="profile-image">
+    <div class="avatar-wrapper">
+      <img class="avatar" [src]="getSafeImageURL(currentProduct.product_img)" alt="User Image" />
     </div>
-  </ion-card>
+  </ion-item>
+</ion-card>
+  <ion-item>
+    <ion-label><strong>รหัส:</strong></ion-label>
+    <ion-text>{{ currentProduct.id }}</ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>ชื่อสินค้า:</strong></ion-label>
+    <ion-text>{{ currentProduct.product_name }}</ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>ยี่ห้อสินค้า:</strong></ion-label>
+    <ion-text>{{ currentProduct.product_brand }}</ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>ราคา:</strong></ion-label>
+    <ion-text>{{ currentProduct.product_price }}</ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>จำนวน:</strong></ion-label>
+    <ion-text>{{ currentProduct.product_quantity }}</ion-text>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label><strong>รายละเอียด:</strong></ion-label>
+    <ion-label class="description" multiline text-wrap>{{ currentProduct.product_description }}</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label><strong>รายละเอียดอื่นๆ:</strong></ion-label>
+    <ion-text>{{ currentProduct.product_other_detail }}</ion-text>
+  </ion-item>
 
+  <ion-button routerLink="/product-edit/{{ currentProduct.id }}" expand="block" color="warning">
+    แก้ไข
+  </ion-button>
+
+  <div *ngIf="!currentProduct" class="no-product">
+    <ion-text color="medium">
+      <p>Please click on a Product...</p>
+    </ion-text>
+  </div>
+  
+  <ion-item>
+  </ion-item>
+</ion-card>

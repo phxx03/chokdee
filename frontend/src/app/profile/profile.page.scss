@@ -1,0 +1,25 @@
+/* profile.page.scss */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-username {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.profile-header ion-item {
+  --ion-item-padding-end: 0;
+  --ion-item-padding-bottom: 0;
+}
+
+.profile-roles ion-item {
+  --ion-item-padding-end: 0;
+}

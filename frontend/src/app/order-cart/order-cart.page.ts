@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
@@ -9,6 +10,8 @@ import { NavController } from '@ionic/angular';
 })
 export class OrderCartPage implements OnInit {
   cartItems: any;
+  
+  defaultImage = 'assets\timered.png';
 
   constructor(private router: Router,private navCtrl: NavController) {}
 
@@ -40,6 +43,14 @@ export class OrderCartPage implements OnInit {
     window.sessionStorage.setItem("cartItem",JSON.stringify(this.cartItems))
     this.router.navigate(['/order-chackout']); // Navigate to the order-chackout page
 
+  }
+  
+  getSafeImageURL(image: string | undefined): SafeUrl {
+    if (image) {
+
+      return "http://localhost:8080/uploads/" + image
+    }
+    return this.defaultImage;
   }
   
   goBack() {

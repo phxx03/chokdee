@@ -11,17 +11,18 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./order-list.page.scss'],
 })
 export class OrderListPage implements OnInit {
-  orders: any[] = []
-  orders_list: any = {}
+  orders: any[] = [];
+  orders_list: any = {};
   currentOrder: Order = {};
   currentIndex = -1;
   orderIds: number[] = [];
   selectedOrderId: number | undefined;
-  
-  filteredOrders: Order[] = [];
+
   searchQuery = '';
   deliveryStatus: string = 'all';
-
+  searchText: string = '';
+  sortOrder: 'asc' | 'desc' = 'asc';
+  showDeliveryOrdersOnly: boolean = false;
 
   constructor(
     private orderService: OrderService,
@@ -31,25 +32,29 @@ export class OrderListPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.retrieveOrders();
     this.getOrders();
   }
+
   group(arr: any, k: any) {
     return arr.reduce((r: any, c: any) => (r[c[k]] = [...r[c[k]] || [], c], r), {});
   }
+
   getOrders() {
     this.orderService.getOrders().subscribe(
       (data: Order[]) => {
-        // this.orders = data;
         this.orders_list = this.group(data, 'order_id');
         console.log(this.orders_list)
-        for (const obj in this.orders_list) {
-          console.log(this.orders_list[obj])
-          this.orders.push(this.orders_list[obj])
+        for (const orderId in this.orders_list) {
+          const orderGroup = this.orders_list[orderId];
+          if (orderGroup && orderGroup.length > 0) {
+            orderGroup.forEach((order: Order) => {
+              order.order_id = orderId;
+            });
+          }
+          this.orders.push(orderGroup);
         }
         console.log(this.orders)
         this.orderIds = this.getUniqueOrderIds(data);
-
       },
       (error) => {
         console.log(error);
@@ -65,21 +70,6 @@ export class OrderListPage implements OnInit {
   viewOrderDetails(orderId: number) {
     console.log(orderId)
     this.router.navigate(['/order-history-details', orderId]);
-    // if (this.orders) {
-    //   const filteredOrders = this.orders.filter(order => order.order_id === orderId);
-    //   if (filteredOrders.length > 0) {
-    //     const order = filteredOrders[0];
-    //     this.router.navigate(['/order-history-details', order.order_id]);
-    //   }
-    // }
-  }
-
-  // Function to retrieve orders by orderId
-  getOrdersByOrderId(orderId: number): Order[] {
-    if (this.orders) {
-      return this.orders.filter(order => order.order_id === orderId);
-    }
-    return [];
   }
 
   retrieveOrders(): void {
@@ -110,38 +100,81 @@ export class OrderListPage implements OnInit {
       error: (e) => console.error(e),
     });
   }
+
   SumTotalprice(data: any) {
     const total = data.reduce((accumulator: any, object: any) => {
       return accumulator + object['order_Product_Total_Price'];
     }, 0);
 
     return total;
-    // console.log(data)
   }
 
-  filterOrders(event: any) {
-    this.searchQuery = event.target.value.toLowerCase();
-  
-    if (this.searchQuery.trim() !== '') {
-      this.filteredOrders = this.orders.filter((orderGroup) => {
-        const order = orderGroup[0];
-        const orderId = order?.order_id;
-        const deliveryStatus = order?.order_Delivery_Status ? 'จัดส่งแล้ว' : 'รอการจัดส่ง';
-  
-        return orderId && deliveryStatus &&
-          (orderId.toString().includes(this.searchQuery) || deliveryStatus.includes(this.searchQuery));
-      });
+  searchUser(): void {
+    this.currentOrder = {};
+    this.currentIndex = -1;
+
+    this.orderService.findByOrder_Customer(this.searchText).subscribe({
+      next: (data) => {
+        this.orders = data;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  shouldShowDeliveryButton(): boolean {
+    return this.showDeliveryOrdersOnly || (Array.isArray(this.filteredOrders()) && this.filteredOrders().some((orderGroup: any) => {
+      return orderGroup[0].order_Type_Delivery === 1 && orderGroup[0].order_Delivery_Status === 0;
+    }));
+    
+  }
+
+  onDeliveryButtonClick() {
+    if (this.showDeliveryOrdersOnly) {
+      console.log('Delivery button clicked for all orders');
     } else {
-      this.filteredOrders = this.orders;
+      const deliveryOrders = this.filteredOrders().filter((orderGroup: any) => {
+        return orderGroup[0].order_Type_Delivery === 1 && orderGroup[0].order_Delivery_Status === 0;
+      });      
+      console.log('Delivery button clicked for specific orders', deliveryOrders);
     }
   }
+
+  filteredOrders() {
+    let filtered = this.orders;
   
+    if (this.showDeliveryOrdersOnly) {
+      filtered = filtered.filter((orderGroup: any) => {
+        return orderGroup[0].order_Type_Delivery === 1 && orderGroup[0].order_Delivery_Status === null;
+      });
+    }
   
+    if (this.searchText) {
+      filtered = filtered.filter((orderGroup: any) => {
+        if (orderGroup && orderGroup.length > 0 && orderGroup[0].order_id) {
+          return orderGroup[0].order_id.toLowerCase().includes(this.searchText.toLowerCase());
+        }
+        return false;
+      });
+    }
   
+    const sorted = filtered.sort((a: any, b: any) => {
+      if (this.sortOrder === 'asc') {
+        if (filtered && filtered.length > 0 && filtered[0].order_id) {
+          return a[0].order_id.localeCompare(b[0].order_id);
+        }
+      } else if (this.sortOrder === 'desc') {
+        if (filtered && filtered.length > 0 && filtered[0].order_id) {
+          return b[0].order_id.localeCompare(a[0].order_id);
+        }
+      }
+      return 0;
+    });
+  
+    return sorted;
+  }
   
   
 
-  
   goBack() {
     this.navCtrl.back();
   }

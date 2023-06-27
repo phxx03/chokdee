@@ -3,7 +3,8 @@ import { UserService } from '../_services/user.service';
 import { Tutorial } from '../models/tutorial.model';
 import { TutorialService } from '../_services/tutorial.service';
 import { AuthService } from '../_services/auth.service';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,13 +27,24 @@ export class BoardAdminPage implements OnInit {
   submitted = false;
 
   selectedFiles: FileList | undefined;
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'top',
+      color: 'success'
+    });
+    toast.present();
+  }
   
 
   constructor(
     private userService: UserService,
     private tutorialService: TutorialService,
     private authService: AuthService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private toastController: ToastController,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -82,6 +94,8 @@ export class BoardAdminPage implements OnInit {
                     // Handle error during product creation
                   }
                 );
+                this.presentToast('เพิ่มสินค้าเรียบร้อย');
+                this.reloadPage();
               }
             },
             (err) => {
@@ -107,6 +121,10 @@ export class BoardAdminPage implements OnInit {
         }
       );
     }
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
   
 

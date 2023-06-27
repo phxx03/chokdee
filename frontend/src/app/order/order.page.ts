@@ -176,23 +176,6 @@ export class OrderPage implements OnInit {
     return this.defaultImage;
   }
 
-  sortQuantity(order: 'asc' | 'desc') {
-    if (this.products && this.products.length > 0) {
-      const sortedProducts = [...this.products]; // สร้างอาร์เรย์ใหม่ก่อนที่จะเรียงลำดับ
-      sortedProducts.sort((a, b) => {
-        if (a && b && a.product_quantity && b.product_quantity) {
-          if (order === 'asc') {
-            return a.product_quantity - b.product_quantity;
-          } else {
-            return b.product_quantity - a.product_quantity;
-          }
-        }
-        return 0;
-      });
-      this.products = sortedProducts; // กำหนดค่าที่เรียงลำดับใหม่ให้กับ this.products
-    }
-  }
-
   goBack() {
     this.navCtrl.back();
   }

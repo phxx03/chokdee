@@ -9,16 +9,8 @@
   </ion-toolbar>
 </ion-header>
 
-<div class="product-list-content">
+<ion-card>
   <ion-searchbar mode="ios" placeholder="ค้นหาสินค้า" [(ngModel)]="searchText"></ion-searchbar>
-  <ion-segment [(ngModel)]="sortOrder">
-    <ion-segment-button value="name">
-      Sort by Name
-    </ion-segment-button>
-    <ion-segment-button value="quantity">
-      Sort by Quantity
-    </ion-segment-button>
-  </ion-segment>
   
   <ion-list>
     <ion-item *ngFor="let product of filteredProducts; let i = index" [class.active]="i == currentIndex" (click)="goToDetailPage(product.id)">
@@ -28,12 +20,12 @@
       <ion-label>
         <h2>{{ product.product_name }}</h2>
         <p>{{ product.product_description }}</p>
-      </ion-label>
-      <div class="item-right">
         <a class="stock-info">
           <ion-icon name="cube-outline" class="stock-icon"></ion-icon>
           <span class="stock-quantity" [class.active]="i == currentIndex">{{ product.product_quantity }}</span>
         </a>
+      </ion-label>
+      <div class="item-right">
         <!-- ปุ่มแก้ไข -->
         <ion-button fill="clear" class="edit-button">
           <ion-icon name="pencil"></ion-icon>
@@ -41,7 +33,6 @@
       </div>
     </ion-item>
   </ion-list>
-  <ion-infinite-scroll>
-    <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-</div>
+  <ion-item>
+  </ion-item>
+</ion-card>

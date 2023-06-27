@@ -4,6 +4,8 @@ import { TutorialService } from '../_services/tutorial.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NavController } from '@ionic/angular';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-tutorials-list',
@@ -22,8 +24,9 @@ export class TutorialsListPage implements OnInit {
     private tutorialService: TutorialService,
     private router: Router,
     private route: ActivatedRoute,
-    private navCtrl: NavController
-  ) {}
+    private navCtrl: NavController,
+    private changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.retrieveProducts();
@@ -78,7 +81,7 @@ export class TutorialsListPage implements OnInit {
     const filtered = this.products?.filter((product) =>
       product.product_name?.toLowerCase().includes(this.searchText?.toLowerCase())
     );
-  
+
     const sorted = filtered?.sort((a, b) => {
       if (this.sortOrder === 'asc' || this.sortOrder === 'desc') {
         if (this.sortOrder === 'asc') {
@@ -97,12 +100,12 @@ export class TutorialsListPage implements OnInit {
       }
       return 0;
     });
-  
+
     return sorted;
   }
-  
-  
-  
+
+
+
   toggleSortOrder() {
     if (this.sortOrder === 'asc') {
       this.sortOrder = 'desc';
@@ -114,10 +117,10 @@ export class TutorialsListPage implements OnInit {
   getSafeImageURL(image: string | undefined): SafeUrl {
     if (image) {
 
-      return "http://localhost:8080/uploads/"+image
+      return "http://localhost:8080/uploads/" + image
     }
     return this.defaultImage;
-  }  
+  }
 
   goBack() {
     this.navCtrl.back();

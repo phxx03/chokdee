@@ -27,20 +27,20 @@
 
 
       <ion-item>
-        <ion-label position="floating">First Name</ion-label>
+        <ion-label position="floating">ชื่อ</ion-label>
         <ion-input type="text" [(ngModel)]="form.personnel_fname" name="personnel_fname"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Last Name</ion-label>
+        <ion-label position="floating">นามสกุล</ion-label>
         <ion-input type="text" [(ngModel)]="form.personnel_lname" name="personnel_lname"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Card ID</ion-label>
-        <ion-input type="text" [(ngModel)]="form.personnel_caedID" name="personnel_caedID"></ion-input>
+        <ion-label position="floating">เลขบัตรประชาชน</ion-label>
+        <ion-input type="text" [(ngModel)]="form.personnel_caedID" name="personnel_caedID" maxlength="13"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Phone</ion-label>
-        <ion-input type="text" [(ngModel)]="form.personnel_phone" name="personnel_phone"></ion-input>
+        <ion-label position="floating">เบอร์โทรศัพท์</ion-label>
+        <ion-input type="text" [(ngModel)]="form.personnel_phone" name="personnel_phone" maxlength="10"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Email</ion-label>
@@ -58,7 +58,7 @@
           <input type="file" (change)="selectFile($event)" />
         </ion-item> -->
       <div class="form-group">
-        <ion-button expand="block" type="submit">Sign Up</ion-button>
+        <ion-button expand="block" type="submit">เพิ่มรายชื่อ</ion-button>
       </div>
     </form>
 
