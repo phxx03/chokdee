@@ -18,15 +18,18 @@ export class BoardAdminPage implements OnInit {
     product_name: '',
     product_brand: '',
     product_description: '',
-    product_price: 20,
+    product_price: undefined,
     product_img: '',
-    product_quantity: 100,
+    product_quantity: undefined,
     product_other_detail: '',
     product_published: false
   };
   submitted = false;
 
   selectedFiles: FileList | undefined;
+  selectedFileName: string | undefined;
+  selectedImage: string | undefined;
+
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
@@ -45,7 +48,7 @@ export class BoardAdminPage implements OnInit {
     private navCtrl: NavController,
     private toastController: ToastController,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.userService.getAdminBoard().subscribe({
@@ -56,6 +59,16 @@ export class BoardAdminPage implements OnInit {
         this.content = JSON.parse(err.error).message;
       }
     });
+  }
+
+  isFormValid() {
+    return (
+      this.product.product_name &&
+      this.product.product_brand &&
+      this.product.product_description &&
+      this.product.product_price &&
+      this.product.product_quantity
+    );
   }
 
   saveProduct(): void {
@@ -75,7 +88,7 @@ export class BoardAdminPage implements OnInit {
       if (file) {
         // Check if the file is an image
         if (file.type.startsWith('image/')) {
-          // Call the uploadFiles() method from TutorialService
+          // Call the uploadFiles() method from AuthService
           this.authService.uploadFiles(file).subscribe(
             (event: any) => {
               if (event.body) {
@@ -127,16 +140,15 @@ export class BoardAdminPage implements OnInit {
     window.location.reload();
   }
   
-
   newProduct(): void {
     this.submitted = false;
     this.product = {
       product_name: '',
       product_brand: '',
       product_description: '',
-      product_price: 20,
+      product_price: undefined,
       product_img: '',
-      product_quantity: 100,
+      product_quantity: undefined,
       product_other_detail: '',
       product_published: false
     };
@@ -144,10 +156,28 @@ export class BoardAdminPage implements OnInit {
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
+    if (this.selectedFiles && this.selectedFiles.length > 0) {
+      this.selectedFileName = this.selectedFiles.item(0)?.name;
+      this.readSelectedFile();
+    } else {
+      this.selectedFileName = undefined;
+      this.selectedImage = undefined;
+    }
   }
+  
+  readSelectedFile(): void {
+    const file = this.selectedFiles?.item(0);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImage = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  
   
   goBack() {
     this.navCtrl.back();
   }
-  
 }

@@ -120,6 +120,10 @@ const routes: Routes = [
     path: 'order-history-details/:id',
     loadChildren: () => import('./order-history-details/order-history-details.module').then( m => m.OrderHistoryDetailsPageModule)
   },
+  {
+    path: 'popup-cart',
+    loadChildren: () => import('./popup-cart/popup-cart.module').then( m => m.PopupCartPageModule)
+  },
 ];
 
 @NgModule({

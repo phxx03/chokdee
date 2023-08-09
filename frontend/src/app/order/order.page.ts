@@ -5,6 +5,8 @@ import { NavController } from '@ionic/angular';
 import { Tutorial } from '../models/tutorial.model';
 import { TutorialService } from '../_services/tutorial.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ModalController } from '@ionic/angular';
+import { PopupCartPage } from '../popup-cart/popup-cart.page';
 
 
 @Component({
@@ -40,11 +42,17 @@ export class OrderPage implements OnInit {
     private tutorialService: TutorialService,
     private toastController: ToastController,
     private router: Router,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private modalController: ModalController
   ) { }
 
   ngOnInit(): void {
     this.retrieveProducts();
+    let data = window.localStorage.getItem("cartItem") || "[]";
+    console.log("data", JSON.parse(data));
+    this.cartItems = JSON.parse(data);
+    console.log(this.cartItems);
+    this.cartItemCount = this.cartItems.length
   }
 
   retrieveProducts(): void {
@@ -74,45 +82,99 @@ export class OrderPage implements OnInit {
     }
   }
 
-
-  addToCart(item: any) {
-    if (!this.cartItems.includes(item)) {
-      this.cartItems.push(item);
-      window.sessionStorage.setItem("cartItem", JSON.stringify(this.cartItems))
-      this.cartItemCount = this.cartItems.length;
-    }
-    else {
-      this.presentToast('มีสินค้าในตระกร้าแล้ว');
+  async addToCart(item: Tutorial) {
+    const existingItem = this.cartItems.find((cartItem: Tutorial) => cartItem.id === item.id);
+  
+    if (existingItem) {
+      const availableQuantity = item.product_quantity || BigInt(0);
+      const selectedQuantity = existingItem.product_cartselect || 0;
+  
+      if (selectedQuantity < availableQuantity) {
+        const modal = await this.modalController.create({
+          component: PopupCartPage,
+          componentProps: {
+            maxQuantity: Number(availableQuantity) - selectedQuantity,
+            cartProductName: existingItem.product_name,
+            cartProductPrice: existingItem.product_price,
+            cartProductQuantity: existingItem.product_quantity,
+            cartProductImg: existingItem.product_img
+          }
+        });
+  
+        await modal.present();
+  
+        const { data } = await modal.onWillDismiss();
+  
+        if (data) {
+          existingItem.product_cartselect += data;
+          this.cartItemCount = this.cartItems.reduce((total, item) => total + (item.product_cartselect || 0), 0);
+          this.updateCartItems();
+        }
+      } else {
+        this.presentToast('สินค้าไม่เพียงพอ');
+      }
+    } else {
+      const availableQuantity = item.product_quantity || BigInt(0);
+  
+      if (availableQuantity === BigInt(0)) {
+        this.presentToast('สินค้าไม่เพียงพอ');
+        return;
+      }
+  
+      const modal = await this.modalController.create({
+        component: PopupCartPage,
+        componentProps: {
+          maxQuantity: Number(availableQuantity),
+          cartProductName: item.product_name,
+          cartProductPrice: item.product_price,
+          cartProductQuantity: item.product_quantity,
+          cartProductImg: item.product_img
+        }
+      });
+  
+      await modal.present();
+  
+      const { data } = await modal.onWillDismiss();
+  
+      if (data) {
+        const newItem = { ...item, product_cartselect: data };
+        this.cartItems.push(newItem);
+        this.cartItemCount = this.cartItems.reduce((total, item) => total + (item.product_cartselect || 0), 0);
+        // this.cartItemCount = this.cartItems.length;
+        this.updateCartItems();
+      }
     }
   }
-  oveFromCart(item: any) {
+  
+  updateCartItems(): void {
+    window.localStorage.setItem('cartItem', JSON.stringify(this.cartItems));
+    this.cartItemCount = this.cartItems.length;
+  }
+  
+  
+  
+  removeFromCart(item: Tutorial) {
     const index = this.cartItems.indexOf(item);
     if (index > -1) {
       this.cartItems.splice(index, 1);
-      this.presentToast('สินค้าถูกลบออกจากตะกร้าแล้ว');
-    }
-  }
-
-  removeFromCart(item: any) {
-    const index = this.cartItems.indexOf(item);
-    if (index > -1) {
-      this.cartItems.splice(index, 1);
       this.cartItemCount = this.cartItems.length;
     }
   }
-
+  
 
   getTotal(): number {
     let total = 0;
     for (const item of this.cartItems) {
-      total += item.product_price * item.product_quantity;
+      total += item.product_price * (item.product_cartselect || 0);
     }
     return total;
   }
+  
 
   goToCart() {
     this.navCtrl.navigateForward('/order-cart');
   }
+
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,

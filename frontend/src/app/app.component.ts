@@ -37,7 +37,6 @@ export class AppComponent implements OnInit {
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
       this.personnel_username = user.personnel_username;
-      // this.reloadPage();
     }
   }
 
@@ -47,11 +46,19 @@ export class AppComponent implements OnInit {
 
   logout(): void {
     this.tokenStorageService.signOut();
-    this.checkLoginStatus(); // อัปเดตสถานะล็อกอิน
+    this.checkLoginStatus();
     this.router.navigate(['/']); // เปลี่ยนเส้นทางไปยังหน้าหลักหรือหน้าอื่นตามที่ต้องการให้ผู้ใช้เข้าถึงหลังจากล็อกอินหรือล็อกเอาท์
   }
 
-  // reloadPage(): void {
-  //   window.location.reload();
-  // }
+  goToProfile(): void {
+    this.router.navigate(['/profile']); // เปลี่ยนเส้นทางไปยังหน้าหลักหรือหน้าอื่นตามที่ต้องการให้ผู้ใช้เข้าถึงหลังจากล็อกอินหรือล็อกเอาท์
+  }
+
+  home(): void {
+    this.reloadPage();
+  }
+
+  reloadPage(): void {
+    window.location.reload();
+  }
 }

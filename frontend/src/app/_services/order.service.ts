@@ -10,6 +10,7 @@ const baseUrl = 'http://localhost:8080/api/orders';
   providedIn: 'root'
 })
 export class OrderService {
+
   getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(baseUrl);
   }
@@ -48,5 +49,16 @@ export class OrderService {
   findByOrder_Customer(order_id: any): Observable<Order[]> {
     return this.http.get<Order[]>(`${baseUrl}?order_id=${order_id}`);
   }
-
+  
+  deleteAllByOrderId(orderId: number): Observable<any> {
+    return this.http.delete(`${baseUrl}?order_id=${orderId}`);
+  }
+  
+  searchOrders(searchText: string, deliveryStatus: string): Observable<any> {
+    const params = {
+      searchText: searchText,
+      deliveryStatus: deliveryStatus
+    };
+    return this.http.get<any>(`${baseUrl}/search`, { params: params });
+  }
 }

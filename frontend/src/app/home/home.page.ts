@@ -31,6 +31,7 @@ export class HomePage {
 
       this.username = user.username;
     }
+    
   }
 
   logout(): void {

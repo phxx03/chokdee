@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button size="small" (click)="dismiss()" fill="clear">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>จำนวนสินค้า</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    
+    <ion-thumbnail slot="start">
+      <img [src]="getSafeImageURL(cartProductImg)" alt="Product Image">
+    </ion-thumbnail>
+  <ion-label class="ion-text-wrap">
+    <p>{{ cartProductName }}</p>
+    <p>quantity: {{ cartProductQuantity }}</p>
+    <p>ราคา: {{ cartProductPrice | currency }}</p>
+  </ion-label>
+</ion-item>
+  <ion-item>
+    <ion-label>เพิ่มลงตะกร้า</ion-label>
+    <ion-input type="number" [(ngModel)]="quantity"></ion-input>
+    <ion-buttons slot="end">
+      <ion-button (click)="decreaseQuantity()" shape="round" fill="outline" color="dark" [disabled]="quantity <= 1">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <ion-button (click)="increaseQuantity()" shape="round" fill="outline" color="dark" [disabled]="quantity >= maxQuantity">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+
+  <ion-button expand="full" (click)="addToCartWithQuantity()" color="primary">
+    เพิ่มลงตะกร้า
+  </ion-button>
+</ion-content>

@@ -139,4 +139,19 @@ export class OrderHistoryDetailsPage implements OnInit {
     });
     toast.present();
   }
+
+  deleteOrder(): void {
+    const orderId = this.currentOrder.order_id;
+    const orderIdsToDelete = this.orderProducts.filter(order => order.order_id === orderId).map(order => order.id);
+    for (const orderIdToDelete of orderIdsToDelete) {
+      this.orderService.delete(orderIdToDelete).subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (e) => console.error(e)
+      });
+    }
+    this.router.navigate(['/order-list']);
+  }
+  
 }

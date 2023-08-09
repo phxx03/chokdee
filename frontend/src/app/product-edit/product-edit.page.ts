@@ -27,6 +27,8 @@ export class ProductEditPage implements OnInit {
   message = '';
   
   selectedFiles: FileList | undefined;
+  selectedFileName: string | undefined;
+  selectedImage: string | undefined;
 
   constructor(
     private tutorialService: TutorialService,
@@ -153,6 +155,24 @@ export class ProductEditPage implements OnInit {
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
+    if (this.selectedFiles && this.selectedFiles.length > 0) {
+      this.selectedFileName = this.selectedFiles.item(0)?.name;
+      this.readSelectedFile();
+    } else {
+      this.selectedFileName = undefined;
+      this.selectedImage = undefined;
+    }
+  }
+  
+  readSelectedFile(): void {
+    const file = this.selectedFiles?.item(0);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImage = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   goBack() {

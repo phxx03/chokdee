@@ -11,37 +11,35 @@
   </ion-toolbar>
 </ion-header>
 
-  <ion-card>
-    <!-- เพิ่มส่วนการค้นหา -->
-    <ion-searchbar [(ngModel)]="searchText" (ionChange)="filteredOrders()"></ion-searchbar>
+<ion-card>
+  <!-- เพิ่มส่วนการค้นหา -->
+  <ion-searchbar [(ngModel)]="searchText" (ionChange)="filteredOrders()"></ion-searchbar>
 
-    <!-- เพิ่มส่วน Toggle สำหรับแสดงเฉพาะออเดอร์ที่มีการจัดส่งและรอการจัดส่ง -->
-    <ion-item>
-      <ion-label>รายการคำสั่งซื้อที่รอการจัดส่ง</ion-label>
-      <ion-toggle [(ngModel)]="showDeliveryOrdersOnly" (ionChange)="filteredOrders()"></ion-toggle>
+  <!-- เพิ่มส่วน Toggle สำหรับแสดงเฉพาะออเดอร์ที่มีการจัดส่งและรอการจัดส่ง -->
+  <ion-item>
+    <ion-label>รายการคำสั่งซื้อที่รอการจัดส่ง</ion-label>
+    <ion-toggle [(ngModel)]="showDeliveryOrdersOnly" (ionChange)="filteredOrders()"></ion-toggle>
+  </ion-item>
+
+  <ion-list>
+    <ion-item *ngFor="let orderGroup of filteredOrders()" (click)="viewOrderDetails(orderGroup[0].order_id)">
+      <ion-label>
+        <h2>Order ID: {{ orderGroup[0].order_id }}</h2>
+        <ion-item>
+          <div>
+            <h3>ชื่อ: {{ orderGroup[0].order_Customer}}</h3>
+            <p>ราคา: {{ SumTotalprice(orderGroup) }}</p>
+            <p>วันที่: {{ orderGroup[0].order_Date | date: 'dd/MM/yyyy' }}</p>
+          </div>
+          <ion-badge *ngIf="orderGroup[0].order_Type_Delivery" slot="end"
+            [color]="orderGroup[0].order_Delivery_Status ? 'secondary' : 'primary'" class="delivery-status-badge">
+            {{ orderGroup[0].order_Delivery_Status ? 'จัดส่งแล้ว' : 'รอการจัดส่ง' }}
+          </ion-badge>
+        </ion-item>
+      </ion-label>
     </ion-item>
-
-    <!-- <ion-button *ngIf="!showDeliveryOrdersOnly" (click)="filterDeliveryOrders()" expand="full" color="primary">Filter Delivery Orders</ion-button> -->
-
-
-    <ion-list>
-      <ion-item *ngFor="let orderGroup of filteredOrders()" (click)="viewOrderDetails(orderGroup[0].order_id)">
-        <ion-label>
-          <h2>Order ID: {{ orderGroup[0].order_id }}</h2>
-          <ion-item>
-            <div>
-              <h3>ชื่อ: {{ orderGroup[0].order_Customer}}</h3>
-              <p>ราคา: {{ SumTotalprice(orderGroup) }}</p>
-              <p>วันที่: {{ orderGroup[0].order_Date | date: 'dd/MM/yyyy' }}</p>
-            </div>
-            <ion-badge *ngIf="orderGroup[0].order_Type_Delivery" slot="end"
-              [color]="orderGroup[0].order_Delivery_Status ? 'secondary' : 'primary'" class="delivery-status-badge">
-              {{ orderGroup[0].order_Delivery_Status ? 'จัดส่งแล้ว' : 'รอการจัดส่ง' }}
-            </ion-badge>
-          </ion-item>
-        </ion-label>
-      </ion-item>
-    </ion-list>
     <ion-item>
+      
     </ion-item>
-  </ion-card>
+  </ion-list>
+</ion-card>

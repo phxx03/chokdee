@@ -65,7 +65,7 @@ export class OrderCartPage implements OnInit {
   constructor(private router: Router,private navCtrl: NavController) {}
 
   ngOnInit(): void {
-    let data = window.sessionStorage.getItem("cartItem") || "[]"
+    let data = window.localStorage.getItem("cartItem") || "[]"
     console.log("data",JSON.parse(data))
     this.cartItems = JSON.parse(data)
     this.cartItems = this.cartItems.map((c: any) => ({...c,product_cartselect:1}))
@@ -88,8 +88,8 @@ export class OrderCartPage implements OnInit {
   }
 
   goToDeliveryForm(): void {
-    window.sessionStorage.setItem("cartItemALL",JSON.stringify(this.cartItems))
-    window.sessionStorage.setItem("cartItem",JSON.stringify(this.cartItems))
+    window.localStorage.setItem("cartItemALL",JSON.stringify(this.cartItems))
+    window.localStorage.setItem("cartItem",JSON.stringify(this.cartItems))
     this.router.navigate(['/order-chackout']); // Navigate to the order-chackout page
 
   }
@@ -247,7 +247,7 @@ export class OrderChackoutPage implements OnInit {
 
     // Perform the order placement logic here
     console.log('Place order:', orderData);
-    window.sessionStorage.setItem("orderData",JSON.stringify(orderData))
+    window.localStorage.setItem("orderData",JSON.stringify(orderData))
     this.router.navigate(['/order-chackout2']);
     
   }
@@ -348,8 +348,8 @@ export class OrderChackout2Page implements OnInit {
   }
 
   ngOnInit() {
-    let data = window.sessionStorage.getItem("cartItemALL") || "[]";
-    let data2 = window.sessionStorage.getItem("orderData") || "{}";
+    let data = window.localStorage.getItem("cartItemALL") || "[]";
+    let data2 = window.localStorage.getItem("orderData") || "{}";
     this.cartItems = JSON.parse(data);
     this.totalPrice = this.calculateTotalPrice();
     let orderdata = JSON.parse(data2);

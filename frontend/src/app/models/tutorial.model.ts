@@ -8,4 +8,6 @@ export class Tutorial {
     product_other_detail?: string;
     product_published?: boolean;
     product_price?: number;
+    product_cartselect?: number;
+    selectedQuantity?: number;
   }

@@ -112,14 +112,21 @@ export class OrderListPage implements OnInit {
   searchUser(): void {
     this.currentOrder = {};
     this.currentIndex = -1;
-
+  
+    if (this.searchText.trim() === '') {
+      this.refreshList();
+      return;
+    }
+  
     this.orderService.findByOrder_Customer(this.searchText).subscribe({
-      next: (data) => {
+      next: (data: Order[]) => {
         this.orders = data;
       },
-      error: (e) => console.error(e),
+      error: (e: any) => console.error(e),
     });
   }
+  
+  
 
   shouldShowDeliveryButton(): boolean {
     return this.showDeliveryOrdersOnly || (Array.isArray(this.filteredOrders()) && this.filteredOrders().some((orderGroup: any) => {
@@ -150,8 +157,10 @@ export class OrderListPage implements OnInit {
   
     if (this.searchText) {
       filtered = filtered.filter((orderGroup: any) => {
-        if (orderGroup && orderGroup.length > 0 && orderGroup[0].order_id) {
-          return orderGroup[0].order_id.toLowerCase().includes(this.searchText.toLowerCase());
+        if (orderGroup && orderGroup.length > 0 && orderGroup[0].order_Customer) {
+          const customerMatch = orderGroup[0].order_Customer.toLowerCase().includes(this.searchText.toLowerCase());
+          const orderMatch = orderGroup[0].order_id.toString().toLowerCase().includes(this.searchText.toLowerCase());
+          return customerMatch || orderMatch;
         }
         return false;
       });
@@ -172,6 +181,8 @@ export class OrderListPage implements OnInit {
   
     return sorted;
   }
+  
+  
   
   
 

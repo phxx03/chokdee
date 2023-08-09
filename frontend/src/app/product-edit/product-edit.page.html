@@ -12,14 +12,15 @@
 
   <ion-card class="product-card" *ngIf="currentProduct.id">
     <ion-item>
-          <input type="file" #fileInput style="display: none" (change)="selectFile($event)" />
-          <div class="upload-box" (click)="fileInput.click()">
-            <ion-icon name="camera" class="camera-icon"></ion-icon>
-            <div class="upload-text">Select Image</div>
-          </div>
-          <ion-icon *ngIf="selectedFiles" name="checkmark-circle-outline" class="selected-icon"></ion-icon>
-          <span *ngIf="selectedFiles" class="file-name">{{ selectedFiles.item(0)?.name }}</span>
-        </ion-item>
+      <input type="file" #fileInput style="display: none" (change)="selectFile($event)" />
+      <div class="upload-box" *ngIf="!selectedImage" (click)="fileInput.click()">
+        <ion-icon name="camera" class="camera-icon"></ion-icon>
+        <div class="upload-text">เลือกรูปภาพ</div>
+      </div>
+      <img [src]="selectedImage" *ngIf="selectedImage" class="selected-image" (click)="fileInput.click()" />
+      <ion-icon *ngIf="selectedImage" name="checkmark-circle-outline" class="selected-icon"></ion-icon>
+      <span *ngIf="selectedImage" class="file-name">{{ selectedFiles?.item(0)?.name }}</span>
+    </ion-item>
 
     <ion-item>
       <ion-label position="floating" for="product_name">ชื่อสินค้า</ion-label>
@@ -52,23 +53,33 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating" for="product_quantity">จำนวนสินค้า</ion-label>
+      <ion-label class="custom-label">
+        จำนวนสินค้า
+      </ion-label>
       <ion-input
         placeholder="กรอกข้อความ"
         id="product_quantity"
         [(ngModel)]="currentProduct.product_quantity"
         name="product_quantity"
       ></ion-input>
+      <ion-label position="after" class="custom-unit">
+        ชิ้น
+      </ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating" for="product_price">ราคาสินค้า</ion-label>
+      <ion-label class="custom-label">
+        ราคา
+      </ion-label>
       <ion-input
         placeholder="กรอกข้อความ"
         id="product_price"
         [(ngModel)]="currentProduct.product_price"
         name="product_price"
       ></ion-input>
+      <ion-label position="after" class="custom-unit">
+        บาท
+      </ion-label>
     </ion-item>
 
     <ion-item>

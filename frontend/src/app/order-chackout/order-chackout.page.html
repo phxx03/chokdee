@@ -20,8 +20,9 @@
     <ion-item>
       <ion-label>เบอร์โทรศัพท์</ion-label>
       <ion-input [(ngModel)]="deliveryDetails.order_Customer_Contact" name="order_Customer_Contact" type="tel" required
-        minlength="10" maxlength="10"></ion-input>
+        inputmode="numeric" pattern="[0-9]*" maxlength="10" (ionInput)="onInput()"></ion-input>
     </ion-item>
+    
     <ion-item>
       <ion-segment [(ngModel)]="deliveryMethod">
         <ion-segment-button value="pickup">
@@ -55,5 +56,5 @@
     </ion-radio-group>
   </ion-item>
 
-  <ion-button expand="full" (click)="placeOrder()">สั่งซื้อสินค้า</ion-button>
+  <ion-button expand="full" (click)="placeOrder()" [disabled]="!isFormValid()">สั่งซื้อสินค้า</ion-button>
 </ion-card>

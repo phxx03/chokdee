@@ -12,12 +12,13 @@
 <ion-card *ngIf="currentUser.id">
   <ion-item>
     <input type="file" #fileInput style="display: none" (change)="selectFile($event)" />
-    <div class="upload-box" (click)="fileInput.click()">
+    <div class="upload-box" *ngIf="!selectedImage" (click)="fileInput.click()">
       <ion-icon name="camera" class="camera-icon"></ion-icon>
-      <div class="upload-text">Select Image</div>
+      <div class="upload-text">เลือกรูปภาพ</div>
     </div>
-    <ion-icon *ngIf="selectedFiles" name="checkmark-circle-outline" class="selected-icon"></ion-icon>
-    <span *ngIf="selectedFiles" class="file-name">{{ selectedFiles.item(0)?.name }}</span>
+    <img [src]="selectedImage" *ngIf="selectedImage" class="selected-image" (click)="fileInput.click()" />
+    <ion-icon *ngIf="selectedImage" name="checkmark-circle-outline" class="selected-icon"></ion-icon>
+    <span *ngIf="selectedImage" class="file-name">{{ selectedFiles?.item(0)?.name }}</span>
   </ion-item>
 
   <ion-item>

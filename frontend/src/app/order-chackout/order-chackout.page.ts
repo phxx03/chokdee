@@ -32,7 +32,13 @@ export class OrderChackoutPage implements OnInit {
 
   constructor(private orderService: OrderService,
     private router: Router,
-    private navCtrl: NavController) {}
+    private navCtrl: NavController) {
+      this.deliveryDetails = {
+        order_Customer: '',
+        order_Customer_Contact: '',
+        order_Customer_Address: ''
+      };
+    }
 
   ngOnInit(): void {
     // Initialize cartItems array with data
@@ -40,6 +46,22 @@ export class OrderChackoutPage implements OnInit {
       // Your cart items data here
     ];
   }
+
+  isFormValid() {
+    return (
+      this.deliveryDetails.order_Customer &&
+      this.deliveryDetails.order_Customer_Contact &&
+      this.deliveryDetails.order_Customer_Contact.length === 10
+    );
+  }
+
+  onInput() {
+    const phoneNumber = this.deliveryDetails.order_Customer_Contact;
+    const numericPhoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+    this.deliveryDetails.order_Customer_Contact = numericPhoneNumber;
+  }
+  
+  
 
   removeFromCart(item: any): void {
     // Remove item from cartItems array
@@ -75,7 +97,7 @@ export class OrderChackoutPage implements OnInit {
 
     // Perform the order placement logic here
     console.log('Place order:', orderData);
-    window.sessionStorage.setItem("orderData",JSON.stringify(orderData))
+    window.localStorage.setItem("orderData",JSON.stringify(orderData))
     this.router.navigate(['/order-chackout2']);
     
   }

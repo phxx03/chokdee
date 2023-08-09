@@ -17,7 +17,8 @@ export class OrderChackout2Page implements OnInit {
   paymentType: string = 'cash'; // เพิ่มตัวแปร paymentType เพื่อเก็บค่าการเลือก cash หรือ transfer
   deliveryMethod: string = ''; // Declare and initialize the deliveryMethod property
   paymentMethod: string = ''; // Declare and initialize the paymentMethod property
-  
+  // cartItems: any[] = [];
+  cartItemCount: number = 0;
 
   order: Order = {
     order_Product_ID: '',
@@ -35,8 +36,8 @@ export class OrderChackout2Page implements OnInit {
   submitted = false;
 
   constructor(
-    private orderService: OrderService, 
-    private navCtrl: NavController, 
+    private orderService: OrderService,
+    private navCtrl: NavController,
     private router: Router) {
     // กำหนดค่าเริ่มต้นให้กับข้อมูลการจัดส่ง (แก้ไขตามข้อมูลที่คุณต้องการ)
     this.deliveryDetails = {
@@ -47,8 +48,8 @@ export class OrderChackout2Page implements OnInit {
   }
 
   ngOnInit() {
-    let data = window.sessionStorage.getItem('cartItemALL') || '[]';
-    let data2 = window.sessionStorage.getItem('orderData') || '{}';
+    let data = window.localStorage.getItem('cartItemALL') || '[]';
+    let data2 = window.localStorage.getItem('orderData') || '{}';
     this.cartItems = JSON.parse(data);
     this.totalPrice = this.calculateTotalPrice();
     let orderData = JSON.parse(data2);
@@ -57,7 +58,7 @@ export class OrderChackout2Page implements OnInit {
     this.deliveryMethod = orderData.deliveryMethod;
     this.paymentMethod = orderData.paymentMethod;
 
-    
+
   }
 
   calculateTotalPrice(): number {
@@ -74,8 +75,8 @@ export class OrderChackout2Page implements OnInit {
     const order_Product_ID: string[] = this.cartItems.map(item => item.id.toString());
     // คำนวณจำนวนสินค้าทั้งหมด
     const order_Product_Quantity: number = this.cartItems.reduce((total, item) => total + item.product_cartselect, 0);
-  
-     // กำหนดค่า order_Type_Delivery ตามค่าที่เลือกใน deliveryMethod
+
+    // กำหนดค่า order_Type_Delivery ตามค่าที่เลือกใน deliveryMethod
     let order_Type_Delivery: boolean;
     if (this.deliveryMethod === 'pickup') {
       order_Type_Delivery = false;
@@ -96,7 +97,7 @@ export class OrderChackout2Page implements OnInit {
     }
 
 
-  
+
     // สร้างออบเจ็กต์ Order จาก deliveryDetails และ order_Product_ID
     const order: Order = {
       order_Customer: this.deliveryDetails.order_Customer,
@@ -110,7 +111,7 @@ export class OrderChackout2Page implements OnInit {
       order_User_ID: '',
       order_Date: new Date()
     };
-  
+
     const data: any = {
       order_data: this.cartItems,
       order_Customer: this.deliveryDetails.order_Customer,
@@ -124,17 +125,32 @@ export class OrderChackout2Page implements OnInit {
       order_Date: new Date()
     }
     console.log('มันมีข้อมูลอยู่นะ', order); // ใช้สำหรับตรวจสอบข้อมูลที่สร้างขึ้นใน console
-  
+
     // ทำสิ่งที่คุณต้องการกับออบเจ็กต์ order ที่สร้างขึ้น เช่น ส่งไปยังเซิร์ฟเวอร์
-    this.orderService.create(data)
-    .subscribe({
+    this.orderService.create(data).subscribe({
       next: (res) => {
         console.log(res);
         this.submitted = true;
+        this.clearCart();
+        this.router.navigate(['/order']);
       },
       error: (e) => console.error(e)
     });
   }
+
+  clearCart(): void {
+    // ล้างตะกร้าสินค้า
+    this.cartItems = [];
+    this.cartItemCount = 0;
+    this.updateCartItems();
+  }
+  
+  updateCartItems(): void {
+    // อัปเดตข้อมูลใน Local Storage
+    window.localStorage.setItem('cartItem', JSON.stringify(this.cartItems));
+  }
+  
+
 
   goBack() {
     this.navCtrl.back();

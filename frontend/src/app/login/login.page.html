@@ -53,6 +53,10 @@
         <div class="ion-text-danger" *ngIf="f.submitted && isLoginFailed">
           Login failed: {{ errorMessage }}
         </div>
+
+        <div class="alert alert-success" *ngIf="isLoggedIn">
+          Logged in as.
+        </div>
       </form>
     </ion-card-content>
   </ion-card>

@@ -23,7 +23,7 @@ export class RegisterPage implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  selectedImage: File | null = null;
+  // selectedImage: File | null = null;
   isSignUpSuccessful = false;
 
   selectedFiles: FileList | undefined;
@@ -33,6 +33,9 @@ export class RegisterPage implements OnInit {
 
   fileInfos: Observable<any> | undefined;
   imagePreview: string | ArrayBuffer | null = null;
+  selectedFileName: string | undefined;
+  selectedImage: string | undefined;
+  
 
   constructor(private authService: AuthService,
     private navCtrl: NavController
@@ -41,6 +44,33 @@ export class RegisterPage implements OnInit {
   ngOnInit(): void {
     this.fileInfos = this.authService.getFiles();
   }
+
+  isFormValid() {
+    return (
+      /^\d+$/.test(this.form.personnel_caedID) &&
+      this.form.personnel_caedID.length === 13 &&
+      /^\d+$/.test(this.form.personnel_phone) &&
+      this.form.personnel_phone.length === 10 &&
+      this.form.personnel_fname &&
+      this.form.personnel_lname &&
+      this.form.personnel_email &&
+      this.form.personnel_username &&
+      this.form.personnel_password
+    );
+  }
+  
+  onInput() {
+    const phoneNumber = this.form.personnel_phone;
+    const numericPhoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+    this.form.personnel_phone = numericPhoneNumber;
+  }
+  
+  onInput2() {
+    const cardid = this.form.personnel_caedID;
+    const numericCardId = cardid.replace(/[^0-9]/g, '');
+    this.form.personnel_caedID = numericCardId;
+  }
+  
 
   onSubmit(): void {
     const {
@@ -158,30 +188,26 @@ export class RegisterPage implements OnInit {
     this.isSignUpFailed = true;
   }
 
-  onImageSelected(event: any) {
-    this.selectedImage = event.target.files[0];
-    if (this.selectedImage) {
-      this.form.personnel_img = this.selectedImage.name;
-    } else {
-      this.form.personnel_img = null;
-    }
-    this.previewImage();
-  }
-
-
-
-  previewImage() {
-    if (this.selectedImage) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-      reader.readAsDataURL(this.selectedImage);
-    }
-  }
-
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
+    if (this.selectedFiles && this.selectedFiles.length > 0) {
+      this.selectedFileName = this.selectedFiles.item(0)?.name;
+      this.readSelectedFile();
+    } else {
+      this.selectedFileName = undefined;
+      this.selectedImage = undefined;
+    }
+  }
+  
+  readSelectedFile(): void {
+    const file = this.selectedFiles?.item(0);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImage = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   goBack() {

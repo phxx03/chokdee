@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
-import { TokenStorageService} from '../_services/token-storage.service';
-import { UserService} from '../_services/user.service';
+import { TokenStorageService } from '../_services/token-storage.service';
+import { UserService } from '../_services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
@@ -19,8 +19,10 @@ export class LoginPage implements OnInit {
   };
   isLoggedIn = false;
   isLoginFailed = false;
+  isLoginSuccessful = false; // เพิ่มตัวแปร isLoginSuccessful
   errorMessage = '';
   roles: string[] = [];
+  showSuccessMessage = false;
 
   constructor(
     private authService: AuthService,
@@ -37,19 +39,32 @@ export class LoginPage implements OnInit {
     }
   }
 
-  async presentToast(message: string): Promise<void> {
+  async presentToast(message: string, isSuccess: boolean): Promise<void> {
     const toast = await this.toastController.create({
-      header: 'ข้อมูลไม่ถูกต้อง',
       message: message,
-      position: 'bottom',
+      duration: 2000,
+      color: isSuccess ? 'success' : 'danger',
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  async showSuccessToast() {
+    const toast = await this.toastController.create({
+      message: 'เข้าสู่ระบบสำเร็จ',
+      position: 'middle',
+      duration: 2000,
+      color: 'success',
+      animated: true,
       buttons: [
         {
           side: 'end',
-          icon: 'checkmark-sharp',
-          handler: () => { console.log('ลองอีกครั้ง'); }
+          text: 'ปิด',
+          role: 'cancel'
         }
       ]
     });
+
     toast.present();
   }
 
@@ -64,18 +79,19 @@ export class LoginPage implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-        this.navCtrl.navigateRoot('/home'); // เด็งไปหน้า Home
+        this.presentToast('เข้าสู่ระบบสำเร็จ', true); // แสดง Toast เมื่อเข้าสู่ระบบสำเร็จ\
         this.reloadPage();
       },
       error: err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
-        this.presentToast(this.errorMessage);
+        this.isLoginSuccessful = false; // ตั้งค่า isLoginSuccessful เป็น false
+        this.presentToast('เข้าสู่ระบบไม่สำเร็จ', false); // แสดง Toast เมื่อเข้าสู่ระบบไม่สำเร็จ
       }
     });
   }
 
   reloadPage(): void {
-    window.location.reload();
+    window.location.href="home";
   }
 }
