@@ -81,6 +81,15 @@ export class ProductEditPage implements OnInit {
 
   updateProduct(): void {
     this.message = '';
+
+
+    if (this.currentProduct && this.currentProduct.product_quantity !== undefined && this.currentProduct.product_price !== undefined) {
+      // Check if quantity and price are greater than or equal to 0
+      if (this.currentProduct.product_quantity <= 0 || this.currentProduct.product_price < 0) {
+        this.handleUpdateError({ message: 'กรุณากรอกข้อมูลที่ถูกต้อง' });
+        return;
+      }
+    }
   
     const data = {
       product_name: this.currentProduct.product_name,
@@ -164,15 +173,32 @@ export class ProductEditPage implements OnInit {
     }
   }
   
+  
   readSelectedFile(): void {
     const file = this.selectedFiles?.item(0);
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.selectedImage = e.target.result;
+  
+        if (this.currentProduct && this.currentProduct.product_quantity !== undefined && this.currentProduct.product_price !== undefined) {
+          // Check if quantity and price are greater than or equal to 0
+          if (this.currentProduct.product_quantity <= 0 || this.currentProduct.product_price < 0) {
+            this.selectedImage = undefined;
+            this.handleUpdateError({ message: 'กรุณากรอกข้อมูลที่ถูกต้อง' });
+          }
+        }
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  isInvalidQuantity(): boolean {
+    return this.currentProduct && this.currentProduct.product_quantity !== undefined && this.currentProduct.product_quantity <= 0;
+  }
+  
+  isInvalidPrice(): boolean {
+    return this.currentProduct && this.currentProduct.product_price !== undefined && this.currentProduct.product_price <= 0;
   }
 
   goBack() {

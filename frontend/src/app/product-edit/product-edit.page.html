@@ -52,35 +52,41 @@
       ></ion-textarea>
     </ion-item>
 
+    <!-- <ion-item>
+      <ion-label position="floating">จำนวน</ion-label>
+      <ion-input type="number" [(ngModel)]="currentProduct.product_quantity" name="product_quantity" required></ion-input>
+    </ion-item>
+    <div *ngIf="isInvalidQuantity()" class="error-message">กรุณากรอกจำนวนที่ไม่น้อยกว่า 0</div> -->
+  
     <ion-item>
       <ion-label class="custom-label">
         จำนวนสินค้า
       </ion-label>
-      <ion-input
-        placeholder="กรอกข้อความ"
-        id="product_quantity"
-        [(ngModel)]="currentProduct.product_quantity"
-        name="product_quantity"
-      ></ion-input>
+      <ion-input type="number" [(ngModel)]="currentProduct.product_quantity" name="product_quantity" required>
+      </ion-input>
       <ion-label position="after" class="custom-unit">
         ชิ้น
       </ion-label>
     </ion-item>
+    <div *ngIf="isInvalidQuantity()" class="error-message">กรุณากรอกจำนวนที่ไม่น้อยกว่า 0</div>
 
+    <!-- <ion-item>
+      <ion-label position="floating">ราคา</ion-label>
+      <ion-input type="number" [(ngModel)]="currentProduct.product_price" name="product_price" required></ion-input>
+    </ion-item>
+    <div *ngIf="isInvalidPrice()" class="error-message">กรุณากรอกราคาที่ไม่น้อยกว่า 0</div> -->
+      
     <ion-item>
       <ion-label class="custom-label">
         ราคา
       </ion-label>
-      <ion-input
-        placeholder="กรอกข้อความ"
-        id="product_price"
-        [(ngModel)]="currentProduct.product_price"
-        name="product_price"
-      ></ion-input>
+      <ion-input type="number" [(ngModel)]="currentProduct.product_price" name="product_price" required>
+      </ion-input>
       <ion-label position="after" class="custom-unit">
         บาท
       </ion-label>
     </ion-item>
+    <div *ngIf="isInvalidPrice()" class="error-message">กรุณากรอกราคาที่ไม่น้อยกว่า 0</div>
 
     <ion-item>
       <ion-label position="floating" for="product_other_detail">รายละเอียดอื่น ๆ</ion-label>

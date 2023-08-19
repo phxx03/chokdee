@@ -52,24 +52,26 @@
       ราคา
     </ion-label>
     <ion-input placeholder="กรอกราคา" id="product_price" required type="number" [(ngModel)]="product.product_price"
-      class="custom-input">
+      class="custom-input" (ionChange)="handleInvalidPrice()">
     </ion-input>
     <ion-label position="after" class="custom-unit">
       บาท
     </ion-label>
   </ion-item>
-
+  
   <ion-item>
     <ion-label class="custom-label">
       จำนวนสินค้า
     </ion-label>
     <ion-input placeholder="กรอกจำนวน" id="product_quantity" required type="number"
-      [(ngModel)]="product.product_quantity" class="custom-input">
+      [(ngModel)]="product.product_quantity" class="custom-input" (ionChange)="handleInvalidQuantity()">
     </ion-input>
     <ion-label position="after" class="custom-unit">
       ชิ้น
     </ion-label>
   </ion-item>
+  
+  
 
   <ion-item>
     <ion-label position="floating">

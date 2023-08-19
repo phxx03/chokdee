@@ -35,7 +35,7 @@ export class BoardAdminPage implements OnInit {
       message: message,
       duration: 2000,
       position: 'top',
-      color: 'success'
+      color: 'danger'
     });
     toast.present();
   }
@@ -66,10 +66,11 @@ export class BoardAdminPage implements OnInit {
       this.product.product_name &&
       this.product.product_brand &&
       this.product.product_description &&
-      this.product.product_price &&
-      this.product.product_quantity
+      this.product.product_price !== undefined && this.product.product_price >= 0 &&
+      this.product.product_quantity !== undefined && this.product.product_quantity >= 0
     );
   }
+  
 
   saveProduct(): void {
     const data = {
@@ -175,6 +176,31 @@ export class BoardAdminPage implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+
+  handleInvalidPrice() {
+    if (this.product.product_price !== undefined && this.product.product_price < 0) {
+      this.presentToast('กรุณากรอกราคาที่ไม่น้อยกว่า 0');
+    }
+  }
+  
+  handleInvalidQuantity() {
+    if (this.product.product_quantity !== undefined && this.product.product_quantity < 0) {
+      this.presentToast('กรุณากรอกจำนวนที่ไม่น้อยกว่า 0');
+    }
+  }
+  
+
+  
+  // async presentToast(message: string) {
+  //   const toast = await this.toastController.create({
+  //     message: message,
+  //     duration: 2000,
+  //     position: 'top',
+  //     color: 'danger'
+  //   });
+  //   toast.present();
+  // }
+  
   
   
   goBack() {

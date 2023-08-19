@@ -98,47 +98,41 @@ exports.findAllPublished = (req, res) => {
   });
 };
 
-// Update a Tutorial identified by the id in the request
-exports.update = (req, res) => {
+// Update an Order identified by the id in the request
+exports.update = (req, response) => {
   // Validate Request
   if (!req.body) {
-    res.status(400).send({
+    response.status(400).send({
       message: "Content can not be empty!"
     });
     return;
   }
 
-  Order.updateById(
-    req.params.id,
-    new Order(req.body),
-    (err, data) => {
-      if (err) {
-        if (err.kind === "not_found") {
-          res.status(404).send({
-            message: `Not found Order with id ${req.params.id}.`
-          });
-        } else {
-          res.status(500).send({
-            message: "Error updating Order with id " + req.params.id
-          });
-        }
+  Order.updateById(req.params.id, new Order(req.body), (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        response.status(404).send({
+          message: `Not found Order with id ${req.params.id}.`
+        });
       } else {
-        // Update the delivery status here
-        Order.updateDeliveryStatus(req.params.id, req.body.order_Delivery_Status, (err, result) => {
-          if (err) {
-            res.status(500).send({
-              message: "Error updating delivery status for Order with id " + req.params.id
-            });
-          } else {
-            res.send({ message: "Order updated successfully" });
-          }
+        response.status(500).send({
+          message: "Error updating Order with id " + req.params.id
         });
       }
+    } else {
+      // Update the delivery status here
+      Order.updateDeliveryStatus(req.params.id, req.body.order_Delivery_Status, (err, result) => {
+        if (err) {
+          response.status(500).send({
+            message: "Error updating delivery status for Order with id " + req.params.id
+          });
+        } else {
+          response.send({ message: "Order updated successfully" });
+        }
+      });
     }
-  );
+  });
 };
-
-
 
 // Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
@@ -204,3 +198,28 @@ exports.getOrderDetailsByOrderId = (req, res) => {
     }
   });
 };
+
+// Update the delivery status of an order
+exports.updateDeliveryStatus = (req, res) => {
+  // Validate Request
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+
+  const orderId = req.params.id;
+  const deliveryStatus = req.body.order_Delivery_Status;
+
+  Order.updateDeliveryStatus(orderId, deliveryStatus, (err, result) => {
+    if (err) {
+      res.status(500).send({
+        message: "Error updating delivery status for Order with id " + orderId
+      });
+    } else {
+      res.send({ message: "Order delivery status updated successfully" });
+    }
+  });
+};
+

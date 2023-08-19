@@ -13,7 +13,7 @@ const Order = function (order) {
   this.order_Product_total_Price = order.order_Product_total_Price;
   this.order_Date = order.order_Date;
   this.order_User_ID = order.order_User_ID;
-  this.order_Delivery_Status = order.order_Delivery_Status;
+  this.order_Delivery_Status = order.order_Delivery_Status || null;;
 };
 
 Order.nextorder = (result) => {

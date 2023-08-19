@@ -180,7 +180,7 @@ export class OrderPage implements OnInit {
       message: message,
       duration: 2000,
       position: 'top',
-      color: 'success'
+      color: 'danger'
     });
     toast.present();
   }
